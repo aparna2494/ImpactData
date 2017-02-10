@@ -1,0 +1,283 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+ <!--  <groupId>it.gits.globalcoesandprograms.bcc-support-portal.bccsp</groupId> -->
+  <!--  <groupId>it.gits.globalcoesandprograms.ciodb.ciodb</groupId> -->
+ 
+    <groupId>it.gits.globalcoesandprograms.bcc-support-portal.bccsp</groupId>
+
+  <artifactId>tomcat7</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>Business Command Center</name>
+	   
+  <repositories>
+  
+    <repository>
+      <id>Cisco repository</id>
+      <url>http://repo-art.cisco.com/artifactory/repo/</url>
+    </repository>
+    
+    <repository>
+      <id>JBoss repository</id>
+      <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+    </repository>
+    
+    <repository>
+      <id>codelds</id>
+      <url>https://code.lds.org/nexus/content/groups/main-repo</url>
+    </repository>
+        
+  </repositories>
+     
+  <dependencies>
+  
+   <!-- <dependency>
+    <groupId>uk.co.innoltd</groupId>
+
+<artifactId>jmongo</artifactId>
+
+<version>1.0.0</version>
+</dependency>
+
+  <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.3.1</version>
+</dependency> -->
+    <dependency>
+<groupId>org.mongodb</groupId>
+<artifactId>mongo-java-driver</artifactId>
+<version>3.2.0</version>
+</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax</groupId>
+        <artifactId>javaee-web-api</artifactId>
+		<version>7.0</version>
+		<scope>provided</scope>
+	</dependency>
+	
+	<dependency>
+      <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+      <version>3.3.2</version>	
+    </dependency>
+	<dependency>
+	<groupId>org.jboss.resteasy</groupId>
+	<artifactId>resteasy-client</artifactId>
+	<version>3.0.16.Final</version>
+</dependency>
+	
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>3.0.9.Final</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+      <version>3.0.9.Final</version>
+    </dependency>  
+    
+    <dependency>
+  <groupId>joda-time</groupId>
+  <artifactId>joda-time</artifactId>
+  <version>2.9.3</version>
+</dependency>
+           
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
+      <version>3.0.9.Final</version>
+    </dependency>
+  
+  <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>jaxrs-api</artifactId>
+      <version>3.0.2.Final</version>
+  </dependency>
+  <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <version>3.0.2.Final</version>
+  </dependency>
+    <dependency>
+	  <groupId>log4j</groupId>
+	  <artifactId>log4j</artifactId>
+	  <version>1.2.17</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.googlecode.json-simple</groupId>
+        <artifactId>json-simple</artifactId>
+        <version>1.1</version>
+    </dependency>
+    
+    <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.0.6.RELEASE</version>
+        </dependency>
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
+      <version>11.2.0.3</version>
+    </dependency>
+    
+    <dependency>
+	  <groupId>javax.mail</groupId>
+	  <artifactId>mail</artifactId>
+	  <version>1.4.7</version>
+    </dependency>
+    <dependency>
+<groupId>com.google.code.gson</groupId>
+<artifactId>gson</artifactId>
+<version>2.2.2</version>
+<scope>compile</scope>
+</dependency>
+        
+        <!-- javamelody-core -->
+        <dependency>
+                <groupId>net.bull.javamelody</groupId>
+                <artifactId>javamelody-core</artifactId>
+                <version>1.50.0</version>
+        </dependency>
+        
+        <!-- itext, option to add PDF export -->
+        <dependency>
+                <groupId>com.lowagie</groupId>
+                <artifactId>itext</artifactId>
+                <version>2.1.7</version>
+                <exclusions>
+                        <exclusion>
+                                <artifactId>bcmail-jdk14</artifactId>
+                                <groupId>bouncycastle</groupId>
+                        </exclusion>
+                        <exclusion>
+                                <artifactId>bcprov-jdk14</artifactId>
+                                <groupId>bouncycastle</groupId>
+                        </exclusion>
+                        <exclusion>
+                                <artifactId>bctsp-jdk14</artifactId>
+                                <groupId>bouncycastle</groupId>
+                        </exclusion>
+                </exclusions>
+        </dependency>
+            <dependency>
+	<groupId>org.mongodb</groupId>
+	<artifactId>mongo-java-driver</artifactId>
+	<version>3.2.0</version>
+</dependency>
+ 
+  </dependencies>
+
+  <build>
+    <finalName>caseimpact</finalName>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins> 
+       <plugin>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+        <version>1.0.0</version>
+        <configuration>
+          <lifecycleMappingMetadata>
+            <pluginExecutions>
+                <pluginExecution>
+                    <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.1</version>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </pluginExecutionFilter>
+                    <action> 
+                        <ignore></ignore>
+                    </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+       </plugin>
+     <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin> 
+      
+       <plugin>
+       <artifactId>maven-war-plugin</artifactId>
+       <version>2.3</version>
+       <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+         <outputDirectory>${basedir}/package/dependencies/jbossews/webapps/</outputDirectory>
+         <warName>ROOT</warName>
+       </configuration>
+     </plugin>
+     
+     <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/package/repo/.openshift</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>${basedir}/.openshift</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>
+           
+     <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<version>2.4</version>
+		<executions>
+			<execution>
+				<phase>package</phase>
+				<goals>
+					<goal>single</goal>
+				</goals>
+			</execution>
+		</executions>
+		<configuration>
+			<appendAssemblyId>false</appendAssemblyId>
+			<descriptors>
+				<descriptor>assembly.xml</descriptor>
+			</descriptors>
+		</configuration>
+	</plugin>
+    </plugins>  
+  </build>		  
+
+  <profiles>
+    <profile>
+<!-- When built in OpenShift the openshift profile will be used when invoking mvn. -->
+<!-- Use this profile for any OpenShift specific customization your app will need. -->
+<!-- By default that is to put the resulting archive into the deployments folder. -->
+<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+      <id>openshift</id>
+    </profile>
+  </profiles>
+      
+</project>

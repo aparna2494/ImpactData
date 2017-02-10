@@ -1,0 +1,746 @@
+<!-- BEGIN MAIN CONTENT -->
+<div>
+   <div class="row bg-dark bg-font-dark">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+         <div class="portlet solid dark">
+            <div class="portlet-title">
+               <div class="actions">
+                  <div class="col-md-4 com-sd-4 col-lg-4">
+                     <angucomplete-alt id="searchTerm"
+                        placeholder="Search.."
+                        maxlength="50"
+                        pause="100"
+                        selected-object="selectedValue"
+                        local-data="availableTags"
+                        search-fields="label"
+                        description-field="category"
+                        title-field="label"
+                        minlength="1"
+                        image-field="pic"
+                        input-class="form-control form-control-small"
+                        match-class="highlight"
+                        ></angucomplete-alt>
+                  </div>
+                  <div class="btn-group dark">
+                     <a class="btn dark btn-medium" href="javascript:;"
+                        data-toggle="dropdown"> <i class="fa fa-user"></i> View <i
+                        class="fa fa-angle-down"></i>
+                     </a>
+                     <ul class="dropdown-menu pull-right">
+                        <li><a href="javascript:;"> <i class="fa fa-pencil"></i>
+                           Business Process
+                           </a>
+                        </li>
+                        <li><a href="javascript:;"> <i class="fa fa-trash-o"></i>
+                           System
+                           </a>
+                        </li>
+                        <li><a href="/#/KPI/displayDetailsKPI"> <i class="fa fa-info"></i>
+                           KPI details
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="btn-group dark">
+                     <a class="btn dark btn-medium" href="javascript:;"
+                        data-toggle="dropdown"> <i class="fa fa-refresh"></i> Refresh <i
+                        class="fa fa-angle-down"></i>
+                     </a>
+                     <ul class="dropdown-menu pull-right">
+                        <li></li>
+                        <li ng-repeat="frequency in refreshfrequencyset" ng-click="setRefreshFrequency(frequency)"><a href="javascript:;"> <i class="fa fa-hourglass-o"></i>
+                           {{frequency}}  Minutes
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="btn-group">
+                     <a class="btn dark btn-medium" href="#" data-toggle="dropdown"  data-close-others="true" aria-expanded="false">
+                     <i class="icon-settings"></i> Tracks
+                     <i class="fa fa-angle-down"></i>
+                     </a>
+                     <!--  -->
+                     <ul class="dropdown-menu pull-right">
+                        <li>
+                           <div class="mt-checkbox-list" >
+                              <label  class="mt-checkbox mt-checkbox-outline" style="color:#6e6e6e;display:block;" ng-repeat="trackname in trackarray track by $index">
+                              <input type="checkbox" class={{trackname.label}} name="trackname.label" ng-model="trackname.selected" value="{{trackname.label}}" ng-click="filterByTrack(trackname.label,trackname.selected)">{{trackname.label}} 
+                              <span></span>
+                              </label>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="btn-group">
+                     <a class="btn dark btn-medium" href="#" data-toggle="dropdown"  data-close-others="true" aria-expanded="false">
+                     <i class="fa fa-exclamation-triangle"></i> Alert Mode
+                     <i class="fa fa-angle-down"></i>
+                     </a>
+                     <!--  -->
+                     <ul class="dropdown-menu pull-right">
+                        <li>
+                           <div class="mt-checkbox-list" >
+                              <label  class="mt-checkbox mt-checkbox-outline" style="color:#6e6e6e;display:block;">
+                              <input type="checkbox" name="alertmodebox" ng-model="alertmodebox.selected1" value="Critical" ng-click="filterByAlertmode('Critical',alertmodebox.selected1)">Critical
+                              <span></span>
+                              </label>
+                              <label  class="mt-checkbox mt-checkbox-outline" style="color:#6e6e6e;display:block;">
+                              <input type="checkbox" name="alertmodebox" ng-model="alertmodebox.selected2" value="High" ng-click="filterByAlertmode('High',alertmodebox.selected2)">High
+                              <span></span>
+                              </label>
+                              <label  class="mt-checkbox mt-checkbox-outline" style="color:#6e6e6e;display:block;">
+                              <input type="checkbox" name="alertmodebox" ng-model="alertmodebox.selected3" value="Medium" ng-click="filterByAlertmode('Medium',alertmodebox.selected3)">Medium
+                              <span></span>
+                              </label>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- <div class="portlet-input input-inline input-small">
+                     <div class="input-icon right">
+                     	<i class="icon-magnifier"></i> <input class="form-control input"
+                     		ng-model="searchTerm" id="searchTerm"  type="text">
+                     		
+                     		<input class="form-control input"
+                     		ng-model="hiddenBox" type="hidden">
+                     		
+                     </div>
+                     </div> -->
+                  
+                  <!-- <button  title="" data-original-title=""
+                     class="btn  btn-circle-sm btn-icon-only btn-default fa fa-refresh"
+                     ng-click="refresh()"> </button> -->
+               </div>
+            </div>
+            <div class="portlet-body">
+               <div class="modal fade" style="width:auto !important;" id="insertAssignee" role="dialog" >
+   					<div class="panel panel-default" style="margin:0px">
+      					<div class="panel-heading">
+         					<button type="button" class="close" data-dismiss="modal">&times;</button>
+         					<i class="fa fa-exclamation-triangle" style="color:red"></i> <b>ASSIGN ALERT</b>
+      					</div>
+      					<div class="panel-body" style="padding:5px">
+         				<!-- Modal content-->
+         					<div class="modal-body">
+            					<button class="btn btn-sm btn-success" style="border-radius: 5px !important"
+               							ng-click="clickedyes(required_alertid,0)" >
+            					<i class="glyphicon glyphicon-ok"></i> SELF
+            					</button>
+            					<button class="btn btn-sm btn-info" style="border-radius: 5px !important;"
+               							ng-click="showinputbox()" data-target="#insertAssignee">
+            					<i class="fa fa-user-plus" aria-hidden="true"></i> OTHERS
+            					</button>
+            					<button class="btn btn-sm btn-warning" ng-click="unassign(required_alertid,0)" style="border-radius: 5px !important;" id="unassignbtn">
+            					<i class="fa fa-user-times" aria-hidden="true"></i> UNASSIGN
+            					</button>
+            					<button class="btn btn-sm btn-danger" style="border-radius: 5px !important;" ng-click="clickedno()">
+            					<i class="glyphicon glyphicon-remove"></i>CLOSE
+            					</button>
+            					<span></span>
+            					<div class="alert alert-danger" id="invalidalert" style="margin-bottom:10px;margin-top:10px" hidden>
+               						<i class="fa fa-times-circle fa-2x" aria-hidden="true"></i> Not a valid Assignee
+            					</div>
+            					<div id="insertid" hidden style="margin-top:15px">
+               						<input type="text" ng-model="newuserid" data-container = "body" placeholder="Enter the id" class="form-control" />
+               						<div class="modal-footer" style="padding-right:0px">
+                  						<button class="btn  btn-success" style="border-radius: 5px !important;" ng-click="addassignee(required_alertid,newuserid)">Assign</button>
+                  						<button class="btn  btn-danger" style="border-radius: 5px !important;" data-dismiss="modal">Close</button>
+               						</div>
+            					</div>
+         					</div>
+      					</div>
+   					</div>
+				</div>
+               <div class="scroller" style="height: 650px">
+                  <cytoscape  elements="data" layout="layout" styles="styles"
+                     on-complete="poorFunction" context-menu-commands="contextMenu" show-alert-function="showalerts(arg1)" show-upstream-function="showupstream(arg1)" show-downstream-function="showdownstream(arg1)" kpi-details-function="kpidetails(arg1)"
+                     highlight-by-id="hiddenBox" history-show="historyshow" sample-function="alertfn()" refresh-graph="refreshgraph" filter-array="selectedtrackarraylabels" show-selected-node-details="showdetails" trackarray="trackarray"></cytoscape>
+                  <!-- <div id="cytoscape-navigator-container"></div> -->
+               </div>
+               <div id="tablistbox">
+                 
+                  <div class='col-md-12 col-sd-12 col-lg-12'>
+                  <ul class="nav nav-tabs">
+                     <li class="active"><a id="homeclick" data-toggle="tab" style="color:white" href="#home"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Alerts</a></li>
+                     <li><a id="menuclick" style="color:white" data-toggle="tab" href="#menu1"><i class="fa fa-object-group" aria-hidden="true"></i> Node Details</a></li>
+                  </ul>
+                  
+                  </div>
+                  <div class="col-md-12 col-lg-12 col-sd-12">
+                  <div class="tab-content">
+                     <div id="home" class="tab-pane fade in active">
+                        <div id="alerts-listbox" ng-show="alertshow.value">
+                           <div  class="scroller" style="height: 550px;">
+                              <div ng-show="historyshow.value">
+                                 <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sd-12" ng-repeat="alert in alerts_filtered  |orderBy:'alert_mode' track by $index " >
+                                       <!-- BEGIN PORTLET-->
+                                       <div class="portlet  portlet_padding  light mt-element-ribbon highlightable" ng-mouseleave="dehighlightnode()" ng-mouseover="highlightnode(alert.id)" id="{{alert.id}}"  >
+                                          <div  >
+                                             <div class="ribbon  ribbon-right  ribbon-color-default" ng-click="assigntome(alert.alert_assignee,alert.alert_id)">
+                                                {{alert.alert_assignee}}
+                                             </div>
+                                             <div ui-sref="alertdetails({alertID: alert.alert_id})">
+                                                <div class="portlet-title">
+                                                   <div class="caption caption-md">
+                                                      <i class="fa fa-bolt font-red-mint" ng-show="historyshow.value"></i> <span
+                                                         class="caption-subject font-grey-mint bold">{{alert.alert_component}}</span> 
+                                                      <h5 class="font-red-mint in-portal  bold" style="display:inline;margin-left: 5px;" >{{alert.alert_mode}}</h5>
+                                                      <!-- <div class="caption-desc font-grey-cascade">{{alert.track_name}}</div> -->
+                                                      <div><span
+                                                         class="caption-subject font-grey-mint  ">{{alert.track_name}} ({{alert.kpi_name}})
+                                                         </span>
+                                                      </div>
+                                                      <div><span
+                                                         class="caption-subject font-grey-mint  ">{{alert.spark_room_name}}
+                                                         </span>
+                                                      </div>
+                                                      <span
+                                                         class="caption-subject font-grey-mint  ">{{alert.alert_create_date_unx}}
+                                                      </span>
+                                                   </div>
+                                                </div>
+                                                <div class="portlet-body">
+                                                   <!-- <h5 class="font-red-mint in-portal  bold" style="margin-top:-10px" >{{alert.alert_mode}}</h5> -->
+                                                   <div class="row number-stats margin-bottom-10">
+                                                      <div class="col-md-6 col-sm-6 col-xs-6">
+                                                         <div class="stat-left">
+                                                            <div class="stat-number">
+                                                               <div class="title">Threshold: {{alert.entry_threshold|thousandSuffix}}</div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-md-6 col-sm-6 col-xs-6">
+                                                         <div class="stat-right">
+                                                            <div class="stat-chart">
+                                                               <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+                                                               <div id="sparkline_bar2"></div>
+                                                            </div>
+                                                            <div class="stat-number">
+                                                               <div class="title">Current: <b>{{alert.current_value|thousandSuffix}}</b></div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <!-- END PORTLET-->
+                                    </div>
+                                 </div>
+                              </div>
+                              <div  ng-show="!historyshow.value">
+                                 <div class="row">
+                                    <div class="col-lg-12 col-md-12-col-sd-12" ng-repeat="hist in history  | orderBy:'-alert_create_date_unx' track by $index " >
+                                       <!-- BEGIN PORTLET-->
+                                       <div id="histalert" class="portlet light mt-element-ribbon highlightable" ng-mouseleave="dehighlightnode()" ng-mouseover="highlightnode(hist.id)" id="{{hist.id}}"  >
+                                          <div  >
+                                             <div class="ribbon  ribbon-right  ribbon-color-default" ng-click="assigntome(hist.alert_assignee,hist.alert_id)">
+                                                {{hist.alert_assignee}}
+                                             </div>
+                                             <div  ui-sref="alertdetails({alertID: hist.alert_id})">
+                                                <div class="portlet-title">
+                                                   <div class="caption caption-md">
+                                                      <i class="fa fa-bolt font-red-mint" ng-show="historyshow.value"></i> <span
+                                                         class="caption-subject font-grey-mint bold">{{hist.alert_component}}</span> <span class="caption-helper hide">weekly
+                                                      stats...</span>
+                                                      <div class="caption-desc font-grey-cascade">{{hist.track_name}}</div>
+                                                      <span
+                                                         class="caption-subject font-grey-mint  ">{{hist.alert_create_date_unx}}
+                                                      </span>
+                                                   </div>
+                                                </div>
+                                                <div class="portlet-body">
+                                                   <h4 class="font-red-mint in-portal  bold" ng-show="historyshow.value">{{hist.alert_mode}}</h4>
+                                                   <div class="row number-stats margin-bottom-10">
+                                                      <div class="col-md-6 col-sm-6 col-xs-6">
+                                                         <div class="stat-left">
+                                                            <div class="stat-number">
+                                                               <div class="title">Threshold</div>
+                                                               <div class="number">{{hist.entry_threshold}}</div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-md-6 col-sm-6 col-xs-6">
+                                                         <div class="stat-right">
+                                                            <div class="stat-chart">
+                                                               <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+                                                               <div id="sparkline_bar2"></div>
+                                                            </div>
+                                                            <div class="stat-number">
+                                                               <div class="title">Current</div>
+                                                               <div class="number bold">{{hist.current_value}}</div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <!-- END PORTLET-->
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- home -->
+                     <div id="menu1" class="tab-pane fade">
+                        <div class="nodepanel">
+                        <div id="nodetab" hidden>
+                           <div class="panel panel-primary" style="margin-bottom:5px;margin-right:12px">
+                              <div class="panel-heading" style="text-align:center"><label class="uppercase bold font-whit-steel">{{selected_node}}</label></div>
+                           </div>
+                           <div class="scroller" style="height: 550px">
+                              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingZero">
+                                       <h4 class="panel-title">
+                                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                                          Node Details
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+                                       <div class="panel-body" style="color:black;font-size:11px;padding-left:5px;padding-right:1px">
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Service:  </label>
+                                                <label class="bold"> {{jobdetails.service}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Service Hier:</label>
+                                                <label class="bold"> {{jobdetails.service_hier}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Service Category:</label>
+                                                <label class="bold">{{jobdetails.serviceCategory}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Service Offering:</label>
+                                                <label class="bold"> {{jobdetails.serviceOffering}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Service Domain:</label>
+                                                <label class="bold">{{jobdetails.serviceDomain}}</label>
+                                             </div>
+                                          </div>
+                                          <div class='row'>
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Application:</label>
+                                                <label class="bold">{{jobdetails.application}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" style="font-size:11px">Concurrent Programs:</label>
+                                                <label class="bold" ng-repeat="program in jobdetails.dependantState">{{program}}</label>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                       <h4 class="panel-title">
+                                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                          People Details
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                       <div class="panel-body" style="color:black;font-size:11px;padding-left:5px;padding-right:1px">
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel" >Support Contact:</label>
+                                                <div ng-repeat="sc in jobdetails.supportContact">
+                                                   <label class="bold">{{sc.name}} - {{sc.cecId}}</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel">Service Owner:</label>
+                                                <label class="bold">{{jobdetails.itServiceOwner}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel">Support Manager:</label>
+                                                <label class="bold"> {{jobdetails.supportManager}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel">Responsible Manager:</label>
+                                                <label class="bold">{{jobdetails.responsibleManager}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel">Service Executive:</label>
+                                                <label class="bold">{{jobdetails.serviceExecutive}}</label>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12 col-sd-12 col-lg-12">
+                                                <label class="uppercase bold font-blue-steel">Support Director:</label>
+                                                <label class="bold"> {{jobdetails.supportDirector}}</label>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                       <h4 class="panel-title">
+                                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                          Host Details
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                       <div class="panel-body" style="color:black">
+                                          <div ng-repeat="i in jobdetails.jvm">
+                                             <label style="margin-bottom:5px"><i class="fa fa-database" aria-hidden="true"></i> <b>{{i.name}}</b></label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                       <h4 class="panel-title">
+                                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                          Database Details
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                       <div class="panel-body">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingFour">
+                                       <h4 class="panel-title">
+                                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                          Job Details
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                       <div class="panel-body" style="color:black;font-size:10px">
+                                          <div ng-repeat="i in jobdetails.job">
+                                             <label style="margin-bottom:5px"><i class="fa fa-database" aria-hidden="true"></i> <b>{{i.name}}</b></label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingFive">
+                                       <h4 class="panel-title">
+                                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                          Change Request in Progress
+                                          </a>
+                                       </h4>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                       <div class="panel-body">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </div>
+                     </div>
+                     <!-- tab content -->
+                  </div>
+                 </div>
+               </div>
+            </div>
+            <!-- 				<div id="alerts-listbox">
+               <div class="mt-element-list">
+               	<div class="mt-list-head list-news font-white bg-blue">
+               		<div class="list-head-title-container">
+               			<span class="badge badge-primary pull-right">3</span>
+               			<h3 class="list-title">Alerts</h3>
+               		</div>
+               	</div>
+               	<div class="mt-list-container list-news">
+               		<ul>
+               			<li class="mt-list-item">
+               				<div class="list-icon-container">
+               					<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+               					</a>
+               				</div>
+               				<div class="list-datetime bold uppercase font-green">8
+               					Apr, 2016 10:20 PM</div>
+               				<div class="list-item-content">
+               					<h3 >
+               						<a href="javascript:;">Service Commerce >> Conversion In Progress</a>
+               					</h3>
+               					<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+               						elit. Donec elementum gravida mauris, a tincidunt dolor
+               						porttitor eu.</p>
+               				</div>
+               			</li>
+               			<li class="mt-list-item">
+               				<div class="list-icon-container">
+               					<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+               					</a>
+               				</div>
+               				<div class="list-datetime bold uppercase font-green">8
+               					Nov, 2015</div>
+               				<div class="list-item-content">
+               					<h3 class="uppercase">
+               						<a href="javascript:;">Latest news on Metronic</a>
+               					</h3>
+               					<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+               						elit. Donec elementum gravida mauris, a tincidunt dolor
+               						porttitor eu.</p>
+               				</div>
+               			</li>
+               			<li class="mt-list-item">
+               				<div class="list-icon-container">
+               					<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+               					</a>
+               				</div>
+               				<div class="list-datetime bold uppercase font-green">8
+               					Nov, 2015</div>
+               				<div class="list-item-content">
+               					<h3 class="uppercase">
+               						<a href="javascript:;">Latest news on Metronic</a>
+               					</h3>
+               					<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+               						elit. Donec elementum gravida mauris, a tincidunt dolor
+               						porttitor eu.</p>
+               				</div>
+               			</li>
+               		</ul>
+               	</div>
+               </div>
+               </div>
+               -->				
+         </div>
+      </div>
+   </div>
+</div>
+<div id="detailModal" class="modal fade" tabindex="-1"
+   data-width="1020">
+   <div class="modal-body">
+      <div class="portlet light ">
+         <div class="portlet-title">
+            <div class="caption font-red-sunglo">
+               <i class="icon-pencil font-red-sunglo"></i>
+               <span class="caption-subject bold uppercase"> {{selectedNodeCode}}</span>
+            </div>
+         </div>
+         <div class="portlet-body form">
+            <!--  details of kpi -->
+            <form role="form">
+               <div class="form-body">
+                  <div class="row" ng-repeat="kpi in kpi_details_for_node">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">KPI Name:</label>
+                           <p class="bold">{{kpi.kpi_name}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">KPI Status:</label>
+                           <p class="bold"> {{kpi.kpi_status}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4" ng-show="">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">DataBase:</label>
+                           <p class="bold">{{kpi.details.database}}</p>
+                        </div>
+                     </div>
+                     <!--  <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="uppercase bold font-blue-steel">Query:</label>
+                           <p class="bold"> {{kpi.details.query_string}}</p>
+                        </div>
+                        </div> -->
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <div class="col-md-4"> <label class="uppercase bold font-blue-steel">Threshold:</label></div>
+                           <div class="col-md-6">
+                              <p class="bold"><span class="label label-danger bold" > Critical </span><span style="margin-left:20px;float:right;">{{kpi.threshold.Critical}}</span></p>
+                              <p class="bold"> <span class="label label-warning"> High </span><span style="margin-left:20px;float:right;">{{kpi.threshold.High}}</span>  </p>
+                              <p class="bold"> <span class="label label-info"> Medium </span> <span style="margin-left:20px;float:right;">{{kpi.threshold.Medium}}</span> </p>
+                           </div>
+                        </div>
+                     </div>
+                     <hr>
+                  </div>
+               </div>
+            </form>
+            <!--  details from neo4j -->
+            <form role="form">
+               <div class="form-body">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Service Owner:</label>
+                           <p class="bold">{{jobdetails.itServiceOwner}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Support Manager:</label>
+                           <p class="bold"> {{jobdetails.supportManager}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Service Executive:</label>
+                           <p class="bold">{{jobdetails.serviceExecutive}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Support Director:</label>
+                           <p class="bold"> {{jobdetails.supportDirector}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Service Offering:</label>
+                           <p class="bold"> {{jobdetails.serviceOffering}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Service Category:</label>
+                           <p class="bold">{{jobdetails.serviceCategory}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Service Domain:</label>
+                           <p class="bold">{{jobdetails.serviceDomain}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Application:</label>
+                           <p class="bold">{{jobdetails.application}}</p>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label class="uppercase bold font-blue-steel">Concurrent Programs:</label>
+                           <p class="bold" ng-repeat="program in jobdetails.concurrent_program">{{program}}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-actions">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<style>
+   .tabcol
+   {
+   padding-left:10px;
+   padding-right:10px;
+   }
+   #tablistbox {
+   position: absolute;
+   /* border-left: 1px solid #000; */
+   /* background: #333; */
+   width: 20%;
+   height: 650px;
+   top: 70px;
+   right: 16px;
+   overflow: hidden;
+   background-color: rgba(0, 0, 0, 0);
+   }
+   .highlighted{
+   background-color:#F1C40F !important;}
+   /* .ui-autocomplete-category
+   {
+   font-weight:bold;
+   }
+   .ui-autocomplete
+   {
+   top:5%;
+   } */
+   .highlight{
+   color:red;}
+   #searchTerm_value{
+   border-radius:25px !important;}
+   .menutry {
+   color: white;
+   border-style: solid;
+   border-color: white;
+   margin-top: 10px;
+   padding: 5px;
+   border-radius: 10px;
+   background-color: (0,0,0,0);
+   }
+   .flip-container {
+   perspective: 1000px;
+   }
+   /* flip the pane when hovered */
+   .flip-container:hover .flipper, .flip-container.hover .flipper {
+   transform: rotateY(180deg);
+   }
+   .flip-container, .front, .back {
+   height: 120px;
+   margin-bottom:10px;
+   }
+   /* flip speed goes here */
+   .flipper {
+   transition: 0.6s;
+   transform-style: preserve-3d;
+   position: relative;
+   }
+   /* hide back of pane during swap */
+   .front, .back {
+   backface-visibility: hidden;
+   position: absolute;
+   top: 0;
+   left: 0;
+   }
+   /* front pane, placed above back */
+   .front {
+   z-index: 2;
+   /* for firefox 31 */
+   transform: rotateY(0deg);
+   }
+   /* back, initially hidden pane */
+   .back {
+   transform: rotateY(180deg);
+   }
+   .nodeclass
+   {
+   color:black;
+   }
+</style>
+<!-- BEGIN MAIN JS & CSS -->

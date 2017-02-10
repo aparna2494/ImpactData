@@ -1,0 +1,58 @@
+<style>
+.lable-text{
+  color: #58585b;
+}
+.fc-event {
+background-color: black;
+}
+.portlet.calendar .fc-event .fc-title {
+    text-align: left;
+    float: left;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+</style>
+				<div class="row">
+					<div class="col-md-3 ">
+						<!-- BEGIN DRAGGABLE EVENTS PORTLET-->
+						<h3 class="event-form-title margin-bottom-20 font-green sbold uppercase">Display Roster</h3>
+						<div id="display-type">
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>Track</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" ng-model="trackSelected">
+									   <option name="application" ng-repeat="track in tracks" value={{track.name}}>{{::track.name}}</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class='space10'></div>
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>AG</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" ng-model="agSelected">
+									   <option name="AG" ng-repeat="AG in AGs" value={{AG.name}}>{{::AG.name}}</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class='space10'></div>
+																			
+						</div>
+					</div>
+						<div class="col-md-9">
+						
+								<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" id="myCalendar"></div>
+
+				    	</div>
+					</div>

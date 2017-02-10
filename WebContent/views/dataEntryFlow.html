@@ -1,0 +1,495 @@
+<style>
+.padding-left-10{
+padding-left:10px !important; }
+.padding-bottom-0{
+padding-bottom:0px !important;}
+</style>
+<!-- BEGIN MAIN CONTENT -->
+
+<div ng-controller="dataEntryController">
+	<div class="row ">
+	<div class="col-lg-3 col-md-3 col-sm-3">
+<div class="portlet light profile-sidebar-portlet ">
+
+				<div class="portlet-title profile-usertitle">
+				<div class="caption font-red-sunglo padding-left-10 padding-bottom-0">
+                                        <i class="icon-share font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase ">  Neo4j Flows</span>
+                                    </div>
+				</div>
+				<div class="portlet-body">
+				 <div class="profile-usermenu">
+                                                <ul class="nav">
+                                                    <li  ng-repeat="track in neo_tracks track by $index" ng-click="fetchTrackflow(track)" ng-class="{active : activeTracks.indexOf(track)>-1}">
+                                                        <a >
+                                                            <i class="icon-pencil"></i> {{track}}<!-- <span class="badge badge-danger pull-right" ng-if="track.status=='new'"> New </span> --> </a>
+                                                    </li>
+                                                    
+                                                    
+                                                </ul>
+                                            </div>
+                                           <!-- END MENU -->
+                                        </div>
+				</div>
+				</div>
+
+		<div class="col-lg-9 col-md-9 col-sm-9 bg-dark bg-font-dark">
+			<div class="portlet solid dark">
+				<div class="portlet-title">
+					<div class="actions">
+					<div class="col-md-5"><angucomplete-alt id="searchTerm"
+										  placeholder="Search.."
+										  maxlength="50"
+										  pause="100"
+										  selected-object="selectedValue"
+										  local-data="availableTags"
+										  search-fields="label"
+										  description-field="category"
+										  title-field="label"
+										  minlength="1"
+										  image-field="pic"
+										  input-class="form-control form-control-small"
+										  match-class="highlight"></angucomplete-alt></div>
+						<div class="btn-group dark">
+							<a class="btn dark btn-medium" href="javascript:;"
+								data-toggle="dropdown"> <i class="fa fa-user"></i> View <i
+								class="fa fa-angle-down"></i>
+							</a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="javascript:;"> <i class="fa fa-pencil"></i>
+										Business Process
+								</a></li>
+								<li><a href="javascript:;"> <i class="fa fa-trash-o"></i>
+										System
+								</a></li>
+							</ul>
+						</div>
+						<!-- <div class="portlet-input input-inline input-small">
+							<div class="input-icon right">
+								<i class="icon-magnifier"></i> <input class="form-control input"
+									ng-model="searchTerm" id="searchTerm"  type="text">
+									
+									<input class="form-control input"
+									ng-model="hiddenBox" type="hidden">
+									
+							</div>
+						</div> -->
+						<button  title="" data-original-title=""
+							class="btn  btn-circle-sm btn-icon-only btn-default fullscreen"
+							> </button>
+							<button  title="" data-original-title=""
+							class="btn  btn-circle-sm btn-icon-only btn-default fa fa-refresh"
+							ng-click="refresh()"> </button>
+							<button  title="" data-original-title=""
+							class="btn  btn-circle-sm btn-icon-only btn-default fa fa-save"
+							ng-click="saveUpdates()" > </button>
+								<button  title="" data-original-title=""
+							class="btn  btn-circle-sm btn-icon-only btn-default fa fa-upload"
+							ng-click="publishChanges()" > </button>
+						
+						
+						
+					</div>
+
+
+				</div>
+				<div class="portlet-body">
+
+					<div class="scroller" style="height: 650px">
+
+						<cytoscaped  elements="data" layout="layout" styles="styles"
+							on-complete="poorFunction" context-menu-commands="contextMenu" add-node-details-function="addnodedetails(arg1)" add-new-kpi-function="addnewkpi(arg1)" connect-to-function="connectto(arg1)" 			
+							 highlight-by-id="hiddenBox" history-show="historyshow" sample-function="alertfn()" maxid="maxid" changed="changed" selectednode="selectednode" refresh-graph="refreshgraph" new-nodes="newNodes" source="source" update-style="updateStyle(data)" fetch-track-flow-counter="fetchTrackflowCounter" save-pub-clicked="savePubClicked"></cytoscaped>
+					</div>
+			</div>
+			</div>
+		</div>
+
+	</div>
+ <!--  <div id="alertSaveModal" class="modal fade" tabindex="-1" data-width="510">
+	 <div class="modal-body">
+	 <div class="portlet light ">
+	 <div class="portlet-body form">
+	 <div class="caption font-red-sunglo">
+	  <div class="row">
+	   <span class="caption-subject bold uppercase"> Your updates have been saved successfully </span>
+	  </div>
+	  </div>
+	 </div>
+	   <div id="space-for-buttons-node"></div>
+	  <div class="form-actions">
+	  <button type="button" class="btn default" data-dismiss="modal">Close</button>	
+	  </div>
+	 </div>  
+	 </div>
+	</div>
+-->
+	<div id="alertSaveModal" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-body">
+	     <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption font-green-sharp">
+                                       <i class="icon-check font-green-sharp"></i>
+                                        <span class="caption-subject bold uppercase"> Successfully saved</span>
+                                    </div>
+                                   
+                                </div>
+    <div class="portlet-body form">
+      <form role="form">
+      <div class="form-body">
+         <p>Your updates have been successfully saved</p>
+          <div id="space-for-buttons-node"></div>
+          <div class="form-actions" style="height:48px">
+             <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+         </div>
+       </form>
+     </div>
+     </div>
+     </div>
+  </div>
+  
+  <div id="alertSaveFailedModal" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-body">
+	     <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption  font-red-sunglo">
+                                       <i class="glyphicon glyphicon-remove font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> Saving changes Failed</span>
+                                    </div>
+                                   
+                                </div>
+    <div class="portlet-body form">
+      <form role="form">
+      <div class="form-body">
+         <p>Your changes failed to update</p>
+          <div id="space-for-buttons-node"></div>
+          <div class="form-actions" style="height:48px">
+             <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+         </div>
+       </form>
+     </div>
+     </div>
+     </div>
+  </div>
+  
+  <div id="alertPublishModal" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-body">
+	     <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption font-green-sharp">
+                                       <i class="icon-check font-green-sharp"></i>
+                                        <span class="caption-subject bold uppercase"> Successfully published</span>
+                                    </div>
+                                   
+                                </div>
+    <div class="portlet-body form">
+      <form role="form">
+      <div class="form-body">
+         <p>Your changes have been successfully published</p>
+          <div id="space-for-buttons-node"></div>
+          <div class="form-actions" style="height:48px">
+             <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+         </div>
+       </form>
+     </div>
+     </div>
+     </div>
+  </div>
+  
+   <div id="alertPublishFailedModal" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-body">
+	     <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                       <i class="glyphicon glyphicon-remove font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> Publish failed</span>
+                                    </div>
+                                   
+                                </div>
+    <div class="portlet-body form">
+      <form role="form">
+      <div class="form-body">
+         <p>Your changes have not been published successfully</p>
+          <div id="space-for-buttons-node"></div>
+          <div class="form-actions" style="height:48px">
+             <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+         </div>
+       </form>
+     </div>
+     </div>
+     </div>
+  </div>
+	<div id="nodeModal" class="modal fade" tabindex="-1"
+	data-width="600">
+	
+	<div class="modal-body">
+	     <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-pencil font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> Node Data Entry</span>
+                                    </div>
+                                   
+                                </div>
+                                <div class="portlet-body form">
+                                    <form role="form">
+                                        <div class="form-body">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Component Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-settings"></i>
+                                                    </span>
+                                                    <input type="text" ng-model="componentName" class="form-control" placeholder="Component Name"> </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Weight</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="weight" placeholder="Weight" > </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                             <div class="form-group">
+                                                <label>Track Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="trackName" placeholder="Track Name" > </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            
+                                <!--             <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i> KPI Data </div>
+                                    <div class="tools">
+                                     <addkpibuttonnode></addkpibuttonnode>
+                                       
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    
+                                        <div class="form-body">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                        <div class="form-group ">
+                                                <label class="control-label">KPI Name</label>
+                                                <input type="text" class="form-control" ng-model="kpiName[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">KPI Status</label>
+                                                <input type="text" class="form-control" ng-model="kpiStatus[0]"> </div>
+                                                 </div>
+                                                 <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">SKMS ID</label>
+                                                <input type="text" class="form-control" ng-model="skmsId[0]"> </div>
+                                                 </div>
+                                                 </div>
+                                                 <div class="row">
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">Threshold for Critical</label>
+                                                <input type="text" class="form-control" ng-model="criticalThreshold[0]"> </div>
+                                                </div>
+                                                
+                                        <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for High</label>
+                                                <input type="text" class="form-control" ng-model="highThreshold[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for Medium</label>
+                                                <input type="text" class="form-control" ng-model="mediumThreshold[0]"> </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                                <div class="form-group ">
+                                                <label class="control-label">Database</label>
+                                                <input type="text" class="form-control" ng-model="database[0]"> </div>
+                                                </div>
+                                                
+                                                <div class="col-md-8">
+                                                <div class="form-group ">
+                                                <label class="control-label">Query</label>
+                                                <textarea class="form-control" ng-model="query[0]"></textarea> </div>
+                                                </div>
+                                                </div>
+                                                
+                                        </div>
+                                        
+                                        
+                                       
+                                   
+                                </div>
+                                
+                            </div> -->
+                                            <div id="space-for-buttons-node"></div>
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn blue" ng-click="saveNodeData()">Submit</button>
+                                            <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div></div>
+	</div>
+<div id="kpiModal" class="modal fade" tabindex="-1"
+	data-width="1020">
+	
+	<div class="modal-body">
+	
+	     <div class="portlet light ">
+	     
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-pencil font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> KPI Data Entry</span>
+                                    </div>
+                                   
+                                </div>
+                                <div class="portlet-body form">
+                                <div class="alert alert-danger" ng-show="saved =='no'" >
+                                          Please  <strong>save</strong> the current flow before adding KPI details! </div>
+                                    <form role="form"  ng-hide="saved =='no'">
+                                       
+                                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i> KPI Data </div>
+                                    <div class="tools">
+                                     <addkpibuttonkpi ></addkpibuttonkpi>
+                                       
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    
+                                        <div class="form-body">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">KPI Name</label>
+                                                <input type="text" class="form-control" ng-model="kpiName[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">KPI Status</label>
+                                                <input type="text" class="form-control" ng-model="kpiStatus[0]"> </div>
+                                                 </div>
+                                                 <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">SKMS ID</label>
+                                                <input type="text" class="form-control" ng-model="skmsId[0]"> </div>
+                                                 </div>
+                                                 </div>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">Threshold for Critical</label>
+                                                <input type="text" class="form-control" ng-model="criticalThreshold[0]"> </div>
+                                                </div>
+                                        <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for High</label>
+                                                <input type="text" class="form-control" ng-model="highThreshold[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for Medium</label>
+                                                <input type="text" class="form-control" ng-model="mediumThreshold[0]"> </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                <div class="col-md-4">
+                                                <div class="form-group ">
+                                                 <label for="dbname">Database </label>
+     											 <select name="dbname" id="dbname" class="form-control"  ng-model="database[0]" ng-options="DBname.DB_NAME for DBname in DBnames track by DBname.DB_NAME" ng-required="true"></select>
+                                                 </div>
+                                                </div>
+                                                
+                                                <div class="col-md-8">
+                                                <div class="form-group ">
+                                                <label class="control-label">Query</label>
+                                                <textarea class="form-control" ng-model="query[0]"></textarea> </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                 
+									<div class="col-md-4">
+															<div class="input-group input-large">
+                                                            <label class="control-label">Next Run TimeStamp</label>
+                                                            <!-- <input type="datetime-local" class="form-control" ng-model="starttime" placeholder="Start Time"> -->
+                                                            <input type="text" class="form-control" datetime-picker="dd/MM/yyyy HH:mm" ng-model="starttime[0]" is-open="obj.opened[0]" placeholder="loading">
+                                                       <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openCalendar($event, 0)"><i class="fa fa-clock-o"></i></button>
+            </span> </div></div>
+            <div class="col-md-4">
+             <label class="control-label">Frequency</label>
+                                                <input type="text" class="form-control" ng-model="frequency[0]"> </div>
+            </div>
+                                                </div>
+                                        </div>
+                                        
+                                        
+                                       
+                                   
+                                </div>
+                                
+                            </div>
+                                            <div id="space-for-buttons-kpi"></div>
+                                        <div class="form-actions"  ng-hide="saved =='no'">
+                                            <button type="submit" class="btn blue" ng-click="saveKPIData()">Submit</button>
+                                            <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div></div>
+	</div>
+
+
+	<!-- query_modal cLOSE -->
+
+
+
+
+                            <!-- BEGIN SAMPLE FORM PORTLET-->
+                       
+
+
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<style>
+.highlighted{
+background-color:#F1C40F !important;}
+/* .ui-autocomplete-category
+  {
+  font-weight:bold;
+  }
+.ui-autocomplete
+{
+top:5%;
+} */
+.highlight{
+color:red;}
+#searchTerm_value{
+border-radius:25px !important;}
+</style>
+<!-- BEGIN MAIN JS & CSS -->

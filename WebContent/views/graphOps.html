@@ -1,0 +1,110 @@
+<style>
+html, body,#graphOps, #graph_row {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#graph_col {
+	width: 60%;
+    height: 90%;
+    position: relative;
+    
+}
+#googleMap
+{
+	width: 800px;
+    height: 900px;
+    position: relative;
+    
+}
+.modal-content
+{ 
+position:relative;
+}
+</style>
+<div ng-controller="graphOpsController" id="graphOps" >
+
+
+<div class="row" id="graph_row">
+<div class="col-md-6" id="graph_col" >
+<div id="googleMap" ></div>
+</div>
+<div class="col-md-3 col-md-offset-1" style="margin-top:-70px;">
+<table class="table table-striped table-bordered" style="margin-top:20% ">
+   
+    <tbody>
+    <tr>
+        <td class="text-center"><h5><b>CUSTOMER</b></h5></td>
+        <td class="text-center hidden" ><h5><b>DOLLAR IMPACT</b></h5></td>
+        <td class="text-center" colspan="3"><h5><b>PULSE OF OPERATIONS</b></h5></td>
+      </tr>
+    <tr>
+        <td></td>
+        
+         <td class="text-center" ><h4>Commerce</h4></td>
+        <td class="text-center" ><h4>Order Management</h4></td>
+       <td class="text-center" ><h4>Supply Chain</h4></td>
+      </tr>
+      <tr ng-repeat="item in items track by $index">
+        <td><h5 style="font-weight: 500">{{item.customer}}</h5></td>
+        <td  class="text-right hidden" ><h5 style="font-weight: 500">{{item.total_dollar_impact}}</h5></td>
+        <td class="text-center  modal_open" style="background-color:{{item.Q2O}}"  ng-click="test(item.incident_list_Q2O)"></td>
+        <td class="text-center  modal_open"   style="background-color:{{item.OM}}" ng-click="test(item.incident_list_OM)"></td>
+        <td class="text-center  modal_open"  style="background-color:{{item.SCM}}" ng-click="test(item.incident_list_SCM)"></td>
+      </tr>
+     
+     
+    </tbody>
+  </table>
+   <button class="hidden" id="modal_open"  data-target='#add_quest_modal' data-toggle='modal'></button>
+     <button class="hidden" id="global_function" ng-click="global_function()"></button>
+     <button class="hidden" id="country_function"  ng-click="country_function()"></button>
+      
+</div>
+</div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="add_quest_modal" >
+    <div class="modal-dialog" style="max-height:650px;width:800px;overflow:auto;">
+      <div class="modal-content">
+      	<div class="modal-header">
+      		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      		<h4 class="modal-title"><h3>Open Incidents</h3></h4>
+      	</div>
+      	<div class="modal-body">
+      	 
+ <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th class="text-center"><h5><b>CET</b></h5> </th>
+        <th class="text-center"><h5><b>Incident Number</b></h5></th>
+        <th class="text-center hidden" ><h5><b>Dollar Impact</b></h5></th>
+        <th class="text-center"><h5><b>CEP</b></h5></th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr ng-repeat="incident_detail in incident_list">
+        
+        <td class="text-center"><i class="fa fa-circle fa-2x" style="color:{{incident_detail.cet_value}}"></i></td>
+        <td class="text-center"><h5 style="font-weight: 500">{{incident_detail.incident_number}}</h5></i></td>
+        <td class="text-right hidden"><h5 style="font-weight: 500">{{incident_detail.total_incident_amount}}</h5></i></td>
+         <td class="text-center"><i class="fa fa-flag fa-2x" style='color:{{incident_detail.cep_value}}'></i></td>
+      </tr>
+     
+      
+    </tbody>
+  </table>
+      		
+      	</div>
+      	<div class="modal-footer">
+	      	<div class="col-md-3 col-md-offset-3">
+	      		 <button type="button" class="btn btn-primary" id="close_add_quest_modal" style="display:none;" data-toggle="modal" data-dismiss="modal" >Close</button> 
+	      	</div>
+        </div>
+      	</div>
+        
+      </div>
+    </div>
+</div>

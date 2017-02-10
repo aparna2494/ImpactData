@@ -1,0 +1,218 @@
+<style>
+.lablel-text {
+	float: left !important;
+	vertical-align: middle !important;
+	font-weight: 400 !important;
+	line-height: 29px !important;
+}
+/*
+.table-cell1{
+margin-left:60px !important;}
+*/
+
+.input {
+	float: right !important;
+}
+.nopto{
+color:#bbb !important;}
+.space10 {
+	padding-bottom: 10px !important;
+	margin-bottom: 30px !important;
+}
+.space5 {
+	
+	margin-bottom: 15px !important;
+}
+.searchbox {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: #00b200 !important;
+	margin-left: 1px !important;
+}
+.searchboxsr {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: red !important;
+	margin-left: 1px !important;
+}
+.searchboxjp {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: skyblue !important;
+	margin-left: 1px !important;
+}
+.searchboxas {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: orange !important;
+	margin-left: 1px !important;
+}
+.searchboxvb {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: blue !important;
+	margin-left: 1px !important;
+}
+
+.line {
+	font-size: 12px;
+	line-height: 19px;
+	padding-left: 5px !important;
+	padding-top: 5px;
+}
+.searchb{
+	border: 1px solid #ddd; 
+	width: 100%; 
+	height: 50px;
+}
+
+.mt-element-list ul{
+	margin:0;
+	padding:0;
+}
+.closeEvnt {        
+    position: absolute;
+    top: 0px;
+    right: 2px;
+    cursor: pointer;    
+    font-weight: bold;
+    font-size: 12px;
+    z-index:9999;    
+}
+</style>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet light portlet-fit bordered calendar">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class=" icon-layers font-green"></i> <span
+						class="caption-subject font-green sbold uppercase">Calendar</span>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-3 col-sm-12">
+						<!-- BEGIN DRAGGABLE EVENTS PORTLET-->
+						<h3 class="event-form-title margin-bottom-20">Create Roaster</h3>
+						<div id="display-type">
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>Track</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" id="list" ng-change="trackChange()" ng-model="trackSelected">
+									   <option ng-repeat="track in tracks"  value="{{track.trackId}}">{{track.track}}</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class='space10'></div>
+							<div class="col-md-12">
+								<label class='label-text'><strong>AG</strong></label>
+								<!--  input class="form-control in-line input"  placeholder=" " type="text" required/ -->
+								<select class="form-control in-line input" placeholder="AG"
+									name="ag" required ng-model="selectedAG" ng-change="agChange()">
+									<option></option>
+									 <option ng-repeat="ag in AGS"  value="{{ag.id}}">{{ag.name}}</option>
+								</select>
+							</div>
+							<div class='space10'></div>
+							<div class="col-md-12">
+								<label class="control-label label-text"><strong>Shift</strong></label>
+								<!-- input  class="form-control in-line input"  placeholder=" " type="text" required -->
+								<select class="form-control in-line input" placeholder="Shift" ng-model="selectedShift"
+									name="shift" required ng-change="shiftChange()">
+									 <option ng-repeat="shift in shifts"  value="{{shift}}">Start:{{minutesToHours(shift.shiftStartTime)}} - End:{{minutesToHours(shift.shiftEndTime)}} ({{shift.name}})</option>
+								</select>
+							</div>
+							<div class='space10'></div>
+							<div class='space10'></div>
+							<div class='space10'></div>
+							<div class='space10'></div>
+
+							
+						</div>
+					</div>
+					<div class="col-md-9 col-sm-12">
+						<div id="calendar" class="has-toolbar fc fc-ltr fc-unthemed">
+							<div class="fc-toolbar" style="display:none">
+								<div class="fc-left">
+									<h2>April 2016</h2>
+								</div>
+								<div class="fc-right">
+									<div class="fc-button-group">
+										<button type="button"
+											class="fc-prev-button fc-button fc-state-default fc-corner-left">
+											<span class="fc-icon fc-icon-left-single-arrow"></span>
+										</button>
+										<button type="button"
+											class="fc-next-button fc-button fc-state-default">
+											<span class="fc-icon fc-icon-right-single-arrow"></span>
+										</button>
+										<button type="button"
+											class="fc-today-button fc-button fc-state-default fc-state-disabled"
+											disabled="disabled">today</button>
+										<button type="button"
+											class="fc-month-button fc-button fc-state-default fc-state-active">month</button>
+										<button type="button"
+											class="fc-agendaWeek-button fc-button fc-state-default">week</button>
+										<button type="button"
+											class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">day</button>
+									</div>
+								</div>
+								<div class="fc-center"></div>
+								<div class="fc-clear"></div>
+							</div>
+							<div class="fc-view-container">
+								<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" id="myCalendar"></div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

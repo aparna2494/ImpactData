@@ -1,0 +1,95 @@
+<style>
+.panel--blue{
+color:#fff;
+background:#049fd9;
+position:relative;
+box-shadow:none;
+border:.0625rem solid transparent;
+font-weight:400}
+}
+.newline
+{
+   display: block;
+}
+</style>  
+
+<div class="row" style="min-height: 550px; margin-left: 10px">
+
+          <div class="col-md-12 margin-top-20"  style="min-height: 350px">
+                      <div class="panel panel-default" >
+                              <div class="panel-body">
+                             <h4> You have chosen:<b> {{selected.AG.name}} {{selected.application.name}}</b> <br></h4>
+                                   </div>
+                       </div>
+                                               
+                             <form class="margin-top-15" name="selectWay">
+                              <div class="form-group">
+                               <h4>Please, select the way of adding users from: {{userchoise.way}}</h4>
+                                  <label class="mt-radio">
+                                    <input name="selectway" type="radio" ng-model="userchoise.way" value="maileralias" >
+                                          Mailer List
+                                  </label>
+                                                        
+                                   <label class="mt-radio">
+                                      <input name="selectway" type="radio" ng-model="userchoise.way" value="activedirectory" >
+                                          Active directory
+                                   </label><br/>
+                                   </div>
+                             </form>
+                   	
+                    <div class="margin-top-10" ng-show="userchoise.way=='maileralias' ? true:false">
+                       <div class="col-md-8">
+                           <form>
+							<div class="form-group">
+								<div class="form-group__text ">
+									<label class="caption-subject bold uppercase"><i class="fa fa-users font-green-haze "></i> Mailer Group Name:</label>			                                                   
+                                                            <input type="text" ng-model="MailerGroupName" ng-change="fetchMembers()" class="form-control" placeholder="Mailer Group Name "> </div>
+							</div>
+							</form>
+                         </div>
+
+                       </div>
+                        <div class="margin-top-10" ng-show="userchoise.way=='activedirectory' ? true:false">
+                       <div class="col-md-8">
+                           <form>
+							<div class="form-group">
+								<div class="form-group__text ">
+									<label class="caption-subject bold uppercase"><i class="fa fa-users font-green-haze"></i> Active Group:</label>			                                                   
+                                                            <input type="text" ng-model="ADGroupName" ng-change="fetchMembers()" class="form-control" placeholder="AD Group Name"> </div>
+							</div>
+							</form>
+                         </div>
+                         
+                           </div>
+                       <div>
+
+                             <div class="col-md-12" id="loadingwait" ng-show="showDataLoader">
+			                          <div id="loadingspinner">
+										 <img src="assets/global/img/spinner.gif" style="width: 25px;"/>
+										 Loading Members..
+									 </div>
+							</div>
+							<div  class="col-md-12" >
+			                  <form class="list-group" name="selectGroup">
+                        	      <label style="display: block" ng-repeat="groupMember in groupMembers track by $index" >
+                        	        <input name="selectedMembers[]" value="{{groupMember}}" type="checkbox" ng-model="groupMember.conflict" /> {{groupMember.userName}} - {{groupMember.title}} 
+                        	      </label>
+                        	</form> 
+                        	</div>                       
+                         </div>                                            
+                     </div>
+                 <div class="margin-top-15">
+                     <div class="col-md-4  pull-left"> 
+                          <button type="button" ng-click="loadMembers();" class="btn btn-success sbold" style="width: 200px">Go to Manage Shifts</button>		  
+                     </div> 	
+                  <div class="col-md-4 pull-right">    					
+                        <button type="button" ng-click="back();" class="btn btn-success sbold" style="width: 200px">Change the track</button>				
+                  </div>
+                 </div>           
+        
+        </div>
+
+
+         
+
+

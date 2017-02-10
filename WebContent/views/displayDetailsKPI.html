@@ -1,0 +1,108 @@
+<style>
+
+.btn-default{
+  border: none;
+  text-align: left;
+  
+}
+.btn-default:focus
+	{
+	 background-color: #f2f2f2;
+	}
+.btn-default:hover,
+.btn-default:active,
+	.btn-default.active {
+    background-color: #f2f2f2;
+}
+
+ul{
+list-style: none;
+-webkit-padding-start: 10px;
+}
+.red{
+  color: #cf2030;
+}
+.orange{
+  color: #ff7300;
+}
+.yellow{
+  color: #ffcc00;
+}
+input{
+width: 100px;
+}
+.new{
+ width: 20px;
+}
+textarea
+{
+  min-height: 100px;
+}
+}
+</style>
+
+<div class="row" >
+	<div class="col-md-12">
+				<div class="row" style="min-height: 550px;">
+               <div class="col-md-3">
+                   <div class="caption" ng-repeat="track in tracks">
+					<button  class="btn btn-default font-green sbold uppercase" style="width:100%" ng-click="(selectedTrack.track_name=track.track_name)&&loadKPI();"  >{{track.track_name}}</button>
+					</div>
+     			</div>
+             
+               <div class="col-md-9">
+               <div  ng-show="load">
+			                          <div id="loadingspinner">
+										 <img src="assets/global/img/spinner.gif" class="font-green " style="width: 25px;"/>
+										 Loading..
+									 </div>
+				 </div>
+				<div  ng-hide="loadsearch" >
+				  <label class="col-md-12 ">
+				   <i class="fa fa-search font-green" style="margin-right: 10px;"></i><span class="font-green sbold uppercase">Search:</span> <input ng-model="search" style="width: 200px;" ></label>
+	               <span  class="sbold uppercase col-md-12" style="width:100%;margin-bottom: 10px;">{{selectedTrack.track_name}}</span> 
+	                <ul ng-hide="load" class="list-group col-md-4" ng-repeat="component in components">
+                       <li  class="list-group-item">{{component.component_name}}</li>
+                       <li  class="list-group-item" ng-repeat="kpi_data in component.kpi_data | filter:search">{{kpi_data.kpi_name}} 
+                                 <i class="fa fa-pencil-square-o pull-right font-green" ng-click="edit = edit == true ? false : true;"></i>
+                          <div ng-show="edit">
+                          <ul>
+                            <li> <i class="fa fa-star red"></i> Critical - <input name=critical type=number min="0" ng-model="kpi_data.threshold.Critical" ng-model-options="{ updateOn: 'blur' }" ng-keypress="filterValue($event)"></input> </li>
+                            <li><i class="fa fa-star orange"></i> High - <input  name=hight type=number min="0" ng-model="kpi_data.threshold.High" ng-model-options="{ updateOn: 'blur' }" ng-keypress="filterValue($event)"></input> </li>
+                            <li><i class="fa fa-star yellow"></i> Medium - <input  name=medium type=number min="0" ng-model="kpi_data.threshold.Medium" ng-model-options="{ updateOn: 'blur' }" ng-keypress="filterValue($event)"></input> </li>
+                             <li><i class="fa fa-flag font-green"></i> Status <br><input class="new center"  type=radio ng-model="kpi_data.kpi_status" value="Y">Yes</input><br>
+                                                                            <input  class="new" type=radio ng-model="kpi_data.kpi_status" value="N">No</input> </li>
+                           <textarea name="querySelect" id="querySelect" class="form-control" ng-model="kpi_data.details.query_string" placeholder="{{kpi_data.details.query_string}}"> </textarea>
+                          </ul>
+                          <span ng-hide="!success" class="font-green sbold">Success!<br></span>
+                            <span ng-hide="!error" class="red">Error!<br></span>
+                           <div  ng-show="load2">
+                          <div id="loadingspinner2">
+										 <img src="assets/global/img/spinner.gif" class="font-green" style="width: 18px;"/>
+										
+									 </div>
+						 </div>
+                          <button type="submit" class="btn btn-default font-green sbold uppercase" ng-click="update(component.track_name,component.component_name,kpi_data);">Save</button>
+                          <button type="button" class="btn btn-default font-green sbold uppercase" ng-click="edit = edit == true ? false : true;">Back</button>
+                            </div>
+                          <div ng-hide="edit">
+                          <ul >
+                            <li> <i class="fa fa-star red"></i> Critical - {{kpi_data.threshold.Critical}} </li>
+                            <li><i class="fa fa-star orange"></i> High - {{kpi_data.threshold.High}} </li>
+                            <li><i class="fa fa-star yellow"></i> Medium - {{kpi_data.threshold.Medium}} </li>
+                            <li ng-hide="isEmpty(kpi_data.details.database)"><i class="fa fa-database font-green"></i>{{kpi_data.details.database}}</li>
+                          </ul>
+                       <button  ng-hide="isEmpty(kpi_data.details.query_string)" class="btn btn-default font-green sbold uppercase" style="width:100%" ng-click="myvalue = myvalue == true ? false : true;" >Query</button>
+                          <span ng-show="myvalue"> {{kpi_data.details.query_string}}</span>
+                          </div>
+                      </li> 
+                                                                          
+                </ul> 
+              </div>
+            </div>
+            </div>
+          </div>        
+		</div>
+
+
+		

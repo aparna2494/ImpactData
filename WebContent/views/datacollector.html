@@ -1,0 +1,79 @@
+<div class="portlet box blue col-md-8 col-md-offset-2">
+                                                <div class="portlet-title">
+                                                    <div class="caption">
+                                                        <i class="fa fa-gift"></i>Impact Data Collection</div>
+                                                    <div class="tools">
+                                                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                                                        <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
+                                                        <a href="javascript:;" class="reload" data-original-title="" title=""> </a>
+                                                        <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form ">
+                                                    <!-- BEGIN FORM-->
+                                                    <form action="#" class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label">Entity</label>
+                                                                <div class="col-md-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon input-circle-left">
+                                                                            <i class="fa fa-folder"></i>
+                                                                        </span>
+                                                                        <input type="text" class="form-control input-circle-right" ng-model="entity[0]" placeholder="Entity"> </div>
+                                                                </div>
+                                                                <label class="col-md-2 control-label">Entity Type</label>
+                                                                <div class="col-md-3 ">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon input-circle-left">
+                                                                            <i class="fa fa-folder"></i>
+                                                                        </span>
+                                                                    <select name="entitytype" id="entitytype" class="form-control col-md-2 input-circle-right" ng-model="entitytype[0]"  ng-options="entitytype.type for entitytype in entitytypes track by entitytype.type" ng-required="true"></select>
+                                                                        
+                                                                       <!--  <input type="text" class="form-control input-circle-right" placeholder="Dependency Type"> </div> -->
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            </div>
+                                                            <div id="space-for-buttons-node"></div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label">Dependency</label>
+                                                                <div class="col-md-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon input-circle-left">
+                                                                            <i class="fa fa-cogs"></i>
+                                                                        </span>
+                                                                        <input type="text" class="form-control input-circle-right" ng-model="dependency[0]" placeholder="Dependency"> </div>
+                                                                </div>
+                                                                
+                                                                <label class="col-md-2 control-label">Dependency Type</label>
+                                                                <div class="col-md-3 ">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon input-circle-left">
+                                                                            <i class="fa fa-cogs"></i>
+                                                                        </span>
+                                                                    <select name="deptype" id="deptype" class="form-control col-md-2 input-circle-right" ng-model="dependencytype[0]" ng-options="dependencytype.type for dependencytype in dependencytypes track by dependencytype.type" ng-required="true"></select>
+                                                                        
+                                                                       <!--  <input type="text" class="form-control input-circle-right" placeholder="Dependency Type"> </div> -->
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <addkpibuttonnode></addkpibuttonnode>
+                                                            </div>
+                                                            
+                                                            
+                                                       
+                                                            
+                                                        </div>
+                                                        <div class="form-actions">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-3 col-md-9">
+                                                                    <button type="submit"  class="btn circle green">Submit</button>
+                                                                    <button type="button" class="btn circle grey-salsa btn-outline">Cancel</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <!-- END FORM-->
+                                                </div>
+                                            </div>

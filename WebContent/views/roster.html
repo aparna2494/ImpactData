@@ -1,0 +1,159 @@
+<style>
+.lablel-text {
+	float: left !important;
+	vertical-align: middle !important;
+	font-weight: 400 !important;
+	line-height: 29px !important;
+}
+/*
+.table-cell1{
+margin-left:60px !important;}
+*/
+
+.input {
+	float: right !important;
+}
+.nopto{
+color:#bbb !important;}
+.space10 {
+	padding-bottom: 10px !important;
+	margin-bottom: 30px !important;
+}
+.space5 {
+	
+	margin-bottom: 15px !important;
+}
+.searchbox {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: #00b200 !important;
+	margin-left: 1px !important;
+}
+.searchboxsr {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: red !important;
+	margin-left: 1px !important;
+}
+.searchboxjp {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: skyblue !important;
+	margin-left: 1px !important;
+}
+.searchboxas {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: orange !important;
+	margin-left: 1px !important;
+}
+.searchboxvb {
+	border-radius: 50% !important;
+	border: 1px solid #DDD;
+	margin-right: 3px;
+	font-size: 22px !important;
+	float: left;
+	width: 20%;
+	text-align: center;
+	height: 49px !important;
+	vertical-align: middle;
+	line-height: 50px;
+	color: blue !important;
+	margin-left: 1px !important;
+}
+
+.line {
+	font-size: 12px;
+	line-height: 19px;
+	padding-left: 5px !important;
+	padding-top: 5px;
+}
+.searchb{
+	border: 1px solid #ddd; 
+	width: 100%; 
+	height: 50px;
+}
+
+.mt-element-list ul{
+	margin:0;
+	padding:0;
+}
+.closeEvnt {        
+    position: absolute;
+    top: 0px;
+    right: 2px;
+    cursor: pointer;    
+    font-weight: bold;
+    font-size: 10px;
+    z-index:9999;    
+}
+.btn-default{
+  border: none;
+  
+}
+.btn-default:focus,
+	.btn-default:active,
+	.btn-default.active {
+	 background-color: white;
+	}
+.btn-default:hover{
+    background-color: #f2f2f2;
+}
+</style>
+<div class="row" >
+	<div class="col-md-12">
+	   
+		<div class="portlet light portlet-fit bordered calendar">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class=" icon-layers font-green"></i> <span
+						class="caption-subject font-green sbold uppercase">Calendar</span>
+				    <button class="btn btn-default font-green sbold uppercase" style="width:150px;" ui-sref-active="selected" id='1' ui-sref="roster.displayRoster">Display Roster</button>
+				    <button class="btn btn-default font-green sbold uppercase"  style="width:150px;" ui-sref-active="selected"  id='2' ui-sref="roster.manageTrack" >Manage Roster</button>
+				    <button class="btn btn-default font-green sbold uppercase"  style="width:150px;" ui-sref-active="selected"  id='2' ui-sref="roster.updateRoster" >Update Roster</button>
+					</div>
+		
+			</div>
+	
+			<div class="portlet-body">
+        
+                                        
+	   		      <div ui-view>          
+            </div>
+           
+		</div>
+	  </div>
+   </div>
+ </div>	 		

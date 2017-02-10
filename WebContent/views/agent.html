@@ -1,0 +1,423 @@
+<style>
+.white-bg
+{
+background-color:white;
+}
+.ui-autocomplete-category
+  {
+  font-weight:bold;
+  }
+.ui-autocomplete
+{
+top:5%;
+}
+.button-rounded
+{
+border-radius:50%;
+}
+.numberCircle {
+    border-radius: 50%;
+   
+    width: 46px;
+    height: 46px;
+    padding: 10px;
+
+    border-radius:50%;
+    border: 2px solid #666;
+    color: #fff;
+    text-align: center;
+
+    font: 20px Arial, sans-serif;
+}
+</style>
+
+<script>
+$(document).ready(function()
+{
+	
+$('#sme_head').one('click',function(e)
+			{
+			
+			if(sessionStorage.logged_index== null | sessionStorage.logged_index=="undefined")
+			{
+			e.preventDefault();
+			$('.dummy_btn').click();
+			sessionStorage.logged_index=1
+
+
+			}
+			}) 
+  
+})
+</script>
+<div ng-controller="agentController">
+	<div class="row">
+	<div class="col-lg-4 col-md-6 col-sm-12">
+	<div class="portlet light mt-element-ribbon">
+	<div class="portlet-body">
+<center><b><font size=4 color=#fed33b>Monitoring Alert queue</font></b></center>
+
+						</div>
+			</div>
+			</div>
+				<div class="col-lg-5 col-md-6 col-sm-12">
+	<div class="portlet light mt-element-ribbon">
+						
+					<div class="portlet-body">
+							<center><b><font size=4 color=#fed33b>Important Events</font></b></center>
+
+						</div>
+						
+					</div>
+			</div>
+			
+				<div class="col-lg-3 col-md-6 col-sm-12">
+	<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-body" id="chat_queue">
+							<center><b><font size=4 >Chat queue</font></b></center>
+
+						</div>
+						
+					</div>
+			</div>
+	</div>
+	<div class="row" id="incident_details" style="display:none;" >
+	 <div class="col-lg-4 col-md-6 col-sm-12">
+	 
+	<div class="portlet light mt-element-ribbon">
+						
+					<div class="portlet-body">
+							<div class="row row_sub">
+								<div class="col-md-5" style="width:160px;">
+								<img id ="image_cep" name="image_name" style="padding: 0.2cm 0.4cm 0.2cm 0.2cm;height:200px;width:160px" ng-src="http://wwwin.cisco.com/dir/photo/std/{{cpe_details.customercec}}.jpg"/>
+								
+								</div>
+								<div class="col-md-7 " >
+								
+								<br>
+								<font size=4 id="displayName" style="font-weight:500;text-shadow: 0px 0px #444444">{{cpe_details.customername}}</font>
+								<br><br>
+								<font size=3  id="cecName"  >{{cpe_details.customercec}}</font>
+								<br><br>
+								<font size=3 id="titleName" >{{cpe_details.job_title}}</font>
+								<br><br>
+								<font size=4 id="region" >{{cpe_details.country}}</font>
+								
+								</div>
+								</div>
+								
+								<div class="row">
+								<div class="col-md-12">
+								<label><font size=3 style="font-weight:500;text-shadow: 0px 0px #444444"> Open Cases</font></label>
+								
+								
+								<div class="row" ng-repeat="open_incident in open_incidents | startFrom:(currentPage_open-1)*pageSize_open | limitTo:pageSize_open  track by $index">
+								<div class="row">
+										<div class="col-md-4">
+										<p><i class="fa fa-circle" style="color:{{open_incident.cet_color}}"></i><font ng-click="get_incident_details(((currentPage_open-1)*pageSize_open)+$index)"> {{open_incident.incidentNumber}}</font></p>
+										</div>
+										<div class="col-md-4 col-md-offset-4">
+										<p>{{open_incident.age}} days ago</p>
+										</div>
+								</div>
+								<div class="row">
+								<div class="col-md-12">
+								<p>{{open_incident.description}}</p>
+								</div>
+								</div>
+								</div>
+								
+								
+								<div class="text-center">
+								
+								<pagination
+									  total-items="totalItems_open" 
+									  ng-model="currentPage_open"
+									  items-per-page="pageSize_open"
+									  rotate="false"
+									  max-size="maxSize"
+									  previous-text="Prev"
+									  next-text="Next" >
+									</pagination>
+								</div>
+								</div>
+								</div>
+								
+								<br><br>
+								<div class="row">
+								<div class="col-md-12">
+								<label><font size=3 style="font-weight:500;text-shadow: 0px 0px #444444"> Past Cases</font></label>
+								
+								
+								
+									<div class="row" ng-repeat="closed_incident in closed_incidents | startFrom:(currentPage_closed-1)*pageSize_closed | limitTo:pageSize_closed  track by $index">
+								<div class="row">
+										<div class="col-md-4">
+										<p><i class="fa fa-circle" style="color:{{closed_incident.cet_color}}"></i><font ng-click="past_incidents(((currentPage_closed-1)*pageSize_closed)+$index)"> {{closed_incident.incidentNumber}}</font></p>
+										</div>
+										<div class="col-md-4 col-md-offset-4">
+										<p>{{closed_incident.age}} days ago</p>
+										</div>
+								</div>
+								<div class="row">
+								<div class="col-md-12">
+								<p>Resolved By: {{closed_incident.assignee}}</p>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-12">
+								<p>{{closed_incident.description}}</p>
+								</div>
+								</div>
+								</div>
+								<div class="text-center">
+								
+								<pagination
+									  total-items="totalItems_closed" 
+									  ng-model="currentPage_closed"
+									  items-per-page="pageSize_closed"
+									  rotate="false"
+									  max-size="maxSize"
+									  previous-text="Prev"
+									  next-text="Next" >
+									</pagination>
+								</div>
+								</div>
+								</div>
+
+						</div>
+						
+					</div>
+					
+					
+					
+					
+			
+			</div>
+			 <div class="col-lg-5 col-md-6 col-sm-12 details hidden">
+	 
+	<div class="portlet light mt-element-ribbon">
+					
+					<div class="portlet-body">
+					
+					<div class="row" >
+ 					<div class="col-md-8"  >
+                    <div class="portlet mt-element-ribbon" id="sme_head"   style="cursor:pointer;background-color:#14a792">
+                        <div class="portlet-body" data-toggle="collapse" data-target=".row1_panel_body">
+                        <button class="dummy_btn" data-toggle="modal" data-target="#myModal"  data-backdrop="static" data-keyboard="false" style="display:none"></button>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <i class="fa fa-users fa-3x"  style="color:white;"></i>
+                                </div>
+                                <div class="col-md-9 text-right">
+                                    <font size=4 color=white><b>SME Locator</b></font>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body collapse row1_panel_body">
+                        <div class="row" id="row_dropdowns">
+			    <div class="col-md-5" id="portfolio_menu_div" >
+                
+                <a class="dropdown-toggle" id="portfolio_menu_btn" role="button" data-toggle="dropdown" href="#"  ng-model="selected_portfolio" style="color:#ffffff;text-decoration:none;">{{selected_portfolio}}
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu" id="portfolio_menu">
+     <li ng-repeat="portfolio in sme_portfolios track by $index" ng-click="select_portfolio($index)"><a href="#" class="portfolio_class">{{portfolio}}</a></li>
+      
+    </ul>
+    </div>
+    
+    <div class="col-md-4" id="application_menu_div" style="display:none;float:right">
+     <a class="dropdown-toggle" id="application_menu_btn" role="button" ng-model="selected_application" href="#" data-toggle="dropdown" style="color:#ffffff;text-decoration:none;float:right;">{{selected_application}}
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu" id="application_menu">
+       <li ng-repeat="application in sme_applications track by $index" ng-click="select_application($index)"><a href="#" class="application_class">{{application}}</a></li>
+      
+    </ul>
+                </div>
+                </div>
+                
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+    <div class="col-md-3 col-md-offset-1"  style="min-height:100px">
+    <div class="portlet mt-element-ribbon"   style="cursor:pointer;background-color:#14a792;height:90px">
+     <div class="portlet-body" id="knowledge_base">
+                       
+                            <div class="row">
+                               
+                                    <a href="https://cisco.jiveon.com/groups/gse-business-command-center" target="_blank"><i class="fa fa-book"  style="color:white;font-size: 4em;padding-left:20px;padding-top:8px;"></i></a>
+                                
+                               
+                            </div>
+                        </div>
+    </div>
+    </div>
+              
+</div>
+<div class="row row1_panel_body" >
+
+                    <div class="col-md-8 " style="padding-left:42px;">
+                        <table class="roster-list" id="sme_jabber_table" style="display:none;width:100%" >
+                        <thead>
+                            <tr>
+                                <th><font size=2>SME</font></th>
+                               	<th style="display:none;"><font size=2>CEC</font></th>
+                               	<th><font size=2>ROLE</font></th>
+                                <th style="float:right;"><font size=2>Status</font></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                             <!-- <tr ng-repeat="sme in smes_list track by $index">
+                            <td>{{sme.full_name}}</td>
+                            <td style="display:none;">{{sme.user_name}}</td>
+                            <td>{{sme.role}}</td>
+                            <td></td>
+                            
+                            </tr>  -->
+                            </tbody>
+                        </table>
+                    </div>
+            
+
+</div>
+
+
+					<div class="row">
+					 <div class="col-md-8" style="background: #ffffff; height: 300px;border-style: ridge;border-color: #f5f5f5;" id="ops_div">
+ 
+
+							<div class="row" id="ops_panel_heading" style="background-color:#14a792;min-height:50px;">
+							<center style="padding-top:16px"><a href="http://vm-gsqs-opsplus/" target="_blank" style="color:white;font-size:15px"><b>OPS+</b></a></center>
+							</div>
+							  <div class="row" id="ops_panel_body" style="padding-top:5px;padding-left:5px;" >
+							   <div class="row">
+							   <div class="col-md-2" style="padding-left:30px;">
+							   <a href="#" class="btn btn-default button-rounded" style="background-color:#14a792;padding-left:10px;padding-top:10px;">
+							   <i class="fa fa-usd fa-2x" title=" Dollar Impacted" style="color:white;"></i></a>
+							   </div>
+							   <div class="col-md-10" style="padding-left:40px;">
+							   <p style="padding-top:10px;"><font size=4 >{{incident_ops_dollar_impacted}}</font></p>
+							   </div>
+							   </div><br>
+							   <div class="row">
+							   <div class="col-md-2" style="padding-left:30px;">
+							   <a href="#" class="btn btn-default" style="background-color:#14a792;padding-left:10px;padding-top:10px;">
+							   <i class="fa fa-exclamation-triangle fa-2x" title="Issue" style="color:white;"></i></a>
+							   </div>
+							   <div class="col-md-10" style="padding-left:40px;">
+							   <p style="padding-top:10px;"><font size=4 >{{incident_ops_issue}}</font></p>
+							   </div>
+							   </div><br>
+							   <div class="row"><div class="col-md-2" style="padding-left:30px;">
+							   <a href="#" class="btn btn-default" style="background-color:#14a792;padding-left:10px;padding-top:10px;">
+							   <i class="fa fa-user fa-2x" title="Impacted Customers" style="color:white;"></i></a>
+							   </div>
+							   <div class="col-md-10" style="padding-left:40px;"><p style="padding-top:10px;"><font size=4 >{{incident_ops_customers}}</font></p>
+							   </div>
+							   </div><br> 
+							  </div>
+
+ </div>
+					
+					
+					
+					
+					
+					  <div class="col-md-3 col-md-offset-1" style="background: #ffffff; height: 100px;border-style: ridge;border-color: #f5f5f5;" id="cep_div">
+ 
+
+<div class="row" id="cep_panel_heading" style="background-color:#14a792;min-height:50px;">
+<center style="padding-top:10px;padding-left:5px;"><a href="#" style="color:white;font-size:15px;"><b>CEP</b></a></center>
+</div>
+  <div class="row" id="cep_panel_body" style="padding-top:5px;padding-left:5px;" >
+   
+  </div>
+  <div class="row" style="padding-top:50px;" >
+  <br><a href="http://wwwin-tools.cisco.com/git/escalate/cetHome.htm" target="_blank" type="button" class="btn btn-default" style="background-color:#14a792;color:white;font-weight:bold;width:100%" id="escalate_btn" >Escalate</a><br><br>
+   <a href="https://cisco.jiveon.com/docs/DOC-1315264" target="_blank" type="button" class="btn btn-default" style="background-color:#14a792;color:white;font-weight:bold;width:100%" id="panic_btn" >Panic</a><br><br>
+   <a href="http://vm-gsqs-opsplus:8080/BCCDutyRoaster/AddAgents.html" title="Duty Roaster" target="_blank" type="button" class="btn btn-default" style="background-color:#14a792;color:white;font-weight:bold;width:100%" id="panic_btn" >Roster</a><br>
+  </div>
+  
+  
+   
+
+
+ </div>
+					</div>
+					</div>
+					</div>
+					</div>
+			
+	
+				 <div class="col-lg-3 col-md-6 col-sm-12 details hidden">
+	 
+	<div class="portlet light mt-element-ribbon">
+					<div class="portlet-title">
+					<a href="{{selected_incident}}">Remedy Incident  Wrapper</a>
+					</div>	
+					<div class="portlet-body">
+					{{selected_incident_notes}}
+					</div>
+					</div>
+					</div>
+			
+	</div>
+</div>
+
+<!-- Modal -->
+<div id="chatModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" >
+       
+        <h4 class="modal-title"><b>Chat Session</b><hr></h4>
+        <br>
+      </div>
+     <div class="modal-body" style="max-height:1000px;">
+           
+            <div class="chat_class" style="height:500px;width:580px;overflow-y:auto;overflow-x:hidden;" id="chat"></div>
+            <hr><br>
+            <input  type="text" class="form-control message_class" style="background-color:#f5f5f5" placeholder="Send your Message" id="message" ></input>
+            
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close_modal_chat" style="display:none;">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <h4 class="modal-title">Jabber Sign In</h4>
+      </div>
+     <div class="modal-body">
+            <form method="post" action='' name="login_form">
+            <label id="error_jabber" style="display:none;"><font color=#C00>Wrong Username or Password</font></label>
+            <label id="missing_jabber" style="display:none;"><font color=#C00>All fields are required</font></label>
+              <p><input type="text" class="form-control" name="eid" id="email" placeholder="Email" ></p>
+              <p><input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password" ></p><p></p>
+              <p><button type="button" id="signin_button" class="btn  btn-primary form-control" style="width:40%">Sign in</button>
+               <button type="button" id="cancel_button" class="btn btn-primary form-control" data-dismiss="modal" style="float:right;width:40%">Cancel</button>
+              </p>
+            </form>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close_modal" style="display:none;">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

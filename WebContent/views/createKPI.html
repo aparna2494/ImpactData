@@ -1,0 +1,112 @@
+<style>
+
+.btn-default{
+  border: none;
+  text-align: left;
+  
+}
+.btn-default:focus
+	{
+	 background-color: #f2f2f2;
+	}
+.btn-default:hover,
+.btn-default:active,
+	.btn-default.active {
+    background-color: #f2f2f2;
+}
+
+ul{
+list-style: none;
+-webkit-padding-start: 10px;
+margin-top:15px;
+}
+.red{
+  color: #cf2030;
+}
+.orange{
+  color: #ff7300;
+}
+.yellow{
+  color: #ffcc00;
+}
+.radio input[type=radio]
+{
+ margin-left: 0px;
+}
+.new{
+ width: 30px;
+}
+.form-control{
+ width:250px;
+}
+.time{
+width:75px;
+display: inline;
+}
+.timelabel{
+margin-right:5px
+}
+}
+</style>
+<div  style="min-height: 550px;">
+<form name="createKPI">
+<div class="form-group">
+  <div class="col-md-4">
+      
+      <div style="margin-left:10px;"> 
+      <label for="kpi_track"><i class="fa fa-file font-green" style="margin-right:8px;"></i>Track name</label>
+     <select name="kpitrack" id="kpitrack" class="form-control"  ng-model="selectedTrack" ng-options="KPItrack.track_name for KPItrack in KPItracks track by KPItrack.track_name" ng-change="load();" ng-required="true"></select>
+     <br>
+     <label for="kpi_component"><i class="fa fa-object-group font-green" style="margin-right:8px;"></i>Component name</label>
+     <select name="kpicomponent" id="kpicomponent" class="form-control"  ng-model="selectedComponent" ng-options="KPIcomponent.component_name for KPIcomponent in KPIcomponents track by KPIcomponent.component_name" ng-required="true"></select>
+     <br>
+      <label for="kpinames"><i class="fa fa-industry font-green" style="margin-right:8px;"></i>KPI name </label>
+     <input type=text name="kpiname" id="kpiname" class="form-control" ng-model="selectedKPI" ng-pattern="test.validation" />
+     <span ng-show="!createKPI.kpiname.$valid" class="red bold">Error!Don't use signs (only minus is allowed) </span>
+     </div>
+     
+      <ul class="form-group">
+                            <li> <i class="fa fa-star red"></i> Critical  <input class="form-control" name=critical type=number min="0" ng-model="kpi_data.threshold.Critical" ng-keypress="filterValue($event)" ng-required="true"/> </li>
+                            <li><i class="fa fa-star orange"></i> High  <input  class="form-control" name=hight type=number min="0" ng-model="kpi_data.threshold.High" ng-keypress="filterValue($event)" ng-required="true"/> </li>
+                            <li><i class="fa fa-star yellow"></i> Medium  <input class="form-control" name=medium type=number min="0" ng-model="kpi_data.threshold.Medium"  ng-keypress="filterValue($event)" ng-required="true"/> </li>
+                            <li><i class="fa fa-flag font-green" style="margin-top:15px;"></i> Status</li>
+                            <li><input name="status" class="form-control" type=radio ng-model="kpi_data.kpi_status" value="Y" />Yes<br></li>
+                            <li><input name="status" class="form-control"  type=radio ng-model="kpi_data.kpi_status" value="N" />No</li>
+                            
+            <br>
+       </ul>
+ </div>
+      <div class="col-md-6">
+      <label for="dbname"><i class="fa fa-database font-green" style="margin-right:8px;"></i>Database </label>
+     <select name="dbname" id="dbname" class="form-control"  ng-model="selectedDB" ng-options="DBname.DB_NAME for DBname in DBnames track by DBname.DB_NAME" ng-required="true"></select>
+    
+     <br>
+     <label for="query"><i class="fa fa-question font-green" style="margin-right:8px;"></i>Query </label>
+     <br>
+     <textarea name="querySelect" id="querySelect" class="form-control" ng-model="querySelect"> </textarea>
+     <br>
+     <label for="frequency"><i class="fa fa-refresh font-green" style="margin-right:8px;"></i>Frequency </label>
+     <br>
+     <label class="timelabel">Hours</label><input class="form-control time" name=frequency type=number min="0" ng-model="selectedFrequencyHour" ng-keypress="filterValue($event)" ng-required="true"/>
+     <label class="timelabel">Minutes</label><input class="form-control time" name=frequency type=number min="0" ng-model="selectedFrequencyMinutes" ng-keypress="filterValue($event)" ng-required="true"/>         
+      </div>
+  </form>
+   
+     <div class="col-md-12">
+      <div  ng-show="loadspiner">
+			                          <div id="loadingspinner">
+										 <img src="assets/global/img/spinner.gif" class="font-green " style="width: 25px;"/>
+										 Loading...
+									 </div>
+				 </div>
+		 <span ng-show="result" class="font-green">Success!</span>
+         <span ng-show="error" class="red">Error!</span>
+       <div class="pull-right">
+            
+             <button type="submit"  ng-disabled="createKPI.$invalid || isComplited();" ng-click="save(createKPI.$valid);" class="btn btn-success sbold">SAVE</button>	
+      </div>
+     
+     </div> 
+ </div>
+
+

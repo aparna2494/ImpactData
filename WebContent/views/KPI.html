@@ -1,0 +1,58 @@
+<style>
+.btn-default{
+  border: none;
+  text-align: left;
+  
+}
+.btn-default:focus
+	{
+	 background-color: white;
+	}
+.btn-default:hover,
+.btn-default:active,
+	.btn-default.active {
+    background-color: white;
+}
+</style>
+<div class="row" >
+	<div class="col-md-12">
+	   
+		<div class="portlet light portlet-fit bordered calendar">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class=" icon-layers font-green"></i> <span
+						class="caption-subject font-green sbold uppercase">Key Performance indicators</span>
+		 	    
+				    <button class="btn btn-default font-green sbold uppercase"  style="width:150px; text-align: center;" ui-sref-active="selected"  id='2'  ui-sref="KPI.displayDetailsKPI" >Details</button>
+				    <button class="btn btn-default font-green sbold uppercase"  style="width:150px; text-align: center;" ui-sref-active="selected"  id='1' ui-sref="KPI.createKPI" >Create KPI</button>
+					</div>
+		<div class="btn-group white pull-right">
+							<a class="btn white btn-medium" href="javascript:;"
+								data-toggle="dropdown"> <i class="fa fa-user font-green"></i> View <i
+								class="fa fa-angle-down"></i>
+							</a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="/#/flow"> <i class="fa fa-pencil font-green"></i>
+										Business Process
+								</a></li>
+								<li><a href="javascript:;"> <i class="fa fa-trash-o font-green"></i>
+										System
+								</a></li>
+								<li><a href="/#/KPI/displayDetailsKPI"> <i class="fa fa-info font-green"></i>
+										KPI details
+								</a></li>
+							</ul>
+						</div>
+			</div>
+			
+	
+			<div class="portlet-body">
+        
+                                        
+	   		      <div ui-view>          
+            </div>
+           
+		</div>
+	  </div>
+   </div>
+ </div>	

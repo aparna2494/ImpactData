@@ -1,0 +1,97 @@
+<div class="row" style="min-height: 550px; margin-left: 10px">
+
+          <div class="col-md-12 margin-top-20"  style="min-height: 350px">
+             <div class="col-md-3 ">
+						<!-- BEGIN DRAGGABLE EVENTS PORTLET-->
+						<div id="display-type">
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>Track</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" ng-model="trackSelected">
+									   <option name="application" ng-repeat="track in tracks" value={{track.name}}>{{::track.name}}</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class='space10'></div>
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>AG</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" ng-model="agSelected">
+									   <option name="AG" ng-repeat="AG in AGs" value={{AG.name}}>{{::AG.name}}</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class='space10'></div>
+							<div class="col-md-12">
+								<div class="ui-widget">
+									<label class="lable-text"><strong>Dates</strong></label>
+									<!--  <input
+										id="male" class="form-control in-line input" list="list"
+										placeholder="Track" type="text" required /> -->
+                                     
+									<select class="form-control in-line input" ng-model="dateSelected">
+									   <option name="date" ng-repeat="date in dates" value={{date}}>{{::date}}</option>
+										
+									</select>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-md-9">
+<div class="col-md-12 margin-bottom-10" ng-repeat="user in users track by $index">
+      <fieldset>
+     <figure class="figure--highlight">
+        <figcaption>
+           <strong>{{user.name}}</strong>
+                  <div>
+                       <span>Start Shift</span>
+                       <div class="col-md-3 input-group"
+                                   moment-picker="user.shiftStartTime"
+                                  format="HH:mm" 
+                                  >
+                          <input name="user.name" class="form-control"
+                               placeholder="Start Shift"
+                               ng-model="user.shiftStartTime"
+                               ng-model-options="{ updateOn: 'blur' }"
+                               >
+                            <span class="input-group-addon">
+                                   <i class="fa fa-clock-o"></i>
+                            </span>
+                           
+                            </div>
+                          <span style="color: red;" ng-show="convert(user.shiftStartTime)+59>=convert(user.shiftEndTime)">Start shift has to be early than End Shift for 1 hour<br></span>
+                        <span>End Shift</span>
+                        <div class="col-md-3 input-group"
+                                   moment-picker="user.shiftEndTime"
+                                  format="HH:mm">
+                      <input name="user.name" class="form-control"
+                             placeholder="End Shift"
+                             ng-model="user.shiftEndTime"
+                             ng-model-options="{ updateOn: 'blur' }"
+                           >
+                                 <span class="input-group-addon">
+                                     <i class="fa fa-clock-o"></i>
+                                 </span>
+                                 
+                                 </div>
+                      <span style="color: red;" ng-show="convert(user.shiftStartTime)+59>=convert(user.shiftEndTime)">Start shift has to be early than End Shift for 1 hour<br></span>
+                   </div>
+            </figcaption>
+            </figure>
+        </fieldset>
+        </div>
+					</div>
+          
+          </div>
+</div>

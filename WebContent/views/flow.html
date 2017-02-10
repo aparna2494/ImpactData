@@ -1,0 +1,177 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="NetworkController">
+	<div class="row bg-dark bg-font-dark">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<div class="portlet solid dark">
+				<div class="portlet-title">
+					<div class="actions">
+						<div class="btn-group dark">
+							<a class="btn dark btn-medium" href="javascript:;"
+								data-toggle="dropdown"> <i class="fa fa-user"></i> View <i
+								class="fa fa-angle-down"></i>
+							</a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="javascript:;"> <i class="fa fa-pencil"></i>
+										Business Process
+								</a></li>
+								<li><a href="javascript:;"> <i class="fa fa-trash-o"></i>
+										System
+								</a></li>
+								<li><a href="/displayKPI"> <i class="fa fa-trash-o"></i>
+										KPI details
+								</a></li>
+							</ul>
+						</div>
+						<div class="portlet-input input-inline input-small">
+							<div class="input-icon right">
+								<i class="icon-magnifier"></i> <input class="form-control input"
+									ng-model="searchTerm" type="text">
+							</div>
+						</div>
+						<a title="" data-original-title=""
+							class="btn  btn-circle-sm btn-icon-only btn-default fullscreen"
+							href="javascript:;"> </a>
+					</div>
+
+
+				</div>
+				<div class="portlet-body">
+
+					<div class="scroller" style="height: 650px">
+
+						<cytoscape elements="data" layout="layout" styles="styles"
+							on-complete="poorFunction" context-menu-commands="contextMenu"
+							highlight-by-name="searchTerm"></cytoscape>
+						<!-- <div id="cytoscape-navigator-container"></div> -->
+					</div>
+					
+					<div id="alerts-listbox" ng-if="alertsarray">
+								<div class="row">
+				<div class="col-lg-12">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon" ng-repeat="alert in alerts  track by $index"  >
+						<div class="ribbon  ribbon-right  ribbon-color-default" ng-click="assigntome(alert.ALERT_PROLE,alert.ALERT_ID)">
+							{{alert.ALERT_PROLE}}
+						</div>
+
+						<div class="portlet-title" ui-sref="alertdetails({alertID: alert.ALERT_ID})">
+							<div class="caption caption-md">
+								<i class="fa fa-bolt font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">{{alert.ALERT_COMPONENT}}</span> <span class="caption-helper hide">weekly
+									stats...</span>
+									
+								<div class="caption-desc font-grey-cascade">{{alert.ALERT_FLOW}}</div>
+									<span
+									class="caption-subject font-grey-mint">As of {{alert.ALERT_DATE}}
+									{{alert.ALERT_AS_OF}}</span>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<h4 class="font-red-mint in-portal  bold">{{alert.ALERT_MODE}}</h4>
+
+
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											<div class="title">Threshold</div>
+											<div class="number">{{alert.ENTRY_THRESHOLD}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"></div>
+										</div>
+										<div class="stat-number">
+											<div class="title">Current</div>
+											<div class="number bold">{{alert.CURRENT_THRESHOLD}}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				</div>
+				</div>
+												
+				</div>
+					
+	<!-- 				<div id="alerts-listbox">
+						<div class="mt-element-list">
+							<div class="mt-list-head list-news font-white bg-blue">
+								<div class="list-head-title-container">
+									<span class="badge badge-primary pull-right">3</span>
+									<h3 class="list-title">Alerts</h3>
+								</div>
+							</div>
+							<div class="mt-list-container list-news">
+								<ul>
+									<li class="mt-list-item">
+										<div class="list-icon-container">
+											<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+										<div class="list-datetime bold uppercase font-green">8
+											Apr, 2016 10:20 PM</div>
+										<div class="list-item-content">
+											<h3 >
+												<a href="javascript:;">Service Commerce >> Conversion In Progress</a>
+											</h3>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+												elit. Donec elementum gravida mauris, a tincidunt dolor
+												porttitor eu.</p>
+										</div>
+									</li>
+									<li class="mt-list-item">
+										<div class="list-icon-container">
+											<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+										<div class="list-datetime bold uppercase font-green">8
+											Nov, 2015</div>
+										<div class="list-item-content">
+											<h3 class="uppercase">
+												<a href="javascript:;">Latest news on Metronic</a>
+											</h3>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+												elit. Donec elementum gravida mauris, a tincidunt dolor
+												porttitor eu.</p>
+										</div>
+									</li>
+									<li class="mt-list-item">
+										<div class="list-icon-container">
+											<a href="javascript:;"> <i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+										<div class="list-datetime bold uppercase font-green">8
+											Nov, 2015</div>
+										<div class="list-item-content">
+											<h3 class="uppercase">
+												<a href="javascript:;">Latest news on Metronic</a>
+											</h3>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing
+												elit. Donec elementum gravida mauris, a tincidunt dolor
+												porttitor eu.</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+-->				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+
+<!-- BEGIN MAIN JS & CSS -->

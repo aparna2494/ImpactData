@@ -1,0 +1,60 @@
+<style>
+
+</style>
+
+<div class='row' style="min-height: 550px; margin-left: 10px"> 
+    <div class="col-md-12 margin-top-20" style="min-height: 350px">
+              <h4> Please, select roster group based on:</h4><br>
+              <form name="myFormApplication">
+                  <label>
+                  <input name="selectbase" type="radio" ng-model="userchoise.application" ng-value="true" ng-click="changeAG();">
+                     Application
+                  </label>
+                  <label>
+                  <input name="selectbase" type="radio" ng-model="userchoise.AG" ng-value="true" ng-click="changeApp();">
+                      Assignee group
+                  </label><br/>
+              </form>
+   
+    
+			 <div class="col-md-12" id="application" ng-show="userchoise.application">
+			   <label><strong> Please, select application name:</strong></label><br/>
+                           <div class="col-md-6">
+                                   <form name="formForApp">
+                   <div class="form-group">
+                   
+                    <select name='application' 
+                    ng-model="selectedApp" 
+                    ng-options="application.label for application in applications track by application.label" 
+                    required>								   
+									   <option value="">Select application</option>
+										
+									</select>
+                    
+                   </div>
+                                   </form>
+                           </div>
+              </div>
+                        <div class="col-md-12" id="application" ng-show="userchoise.AG">
+			        <label><strong> Please, select assignee group:</strong></label><br/>
+                           <div class="col-md-6">
+                                   <form name="formForAG">
+                   <div class="form-group">
+                          <select name='AG' 
+                    ng-model="selectedAG" 
+                    ng-options="AG.assignedGroup for AG in AGs track by AG.assignedGroup" 
+                    required>								   
+									   <option value="">Select assigneed group</option>
+										
+									</select>
+                         </div>
+                                   </form>
+                           </div>
+              </div>
+        </div>
+   
+									<div class="col-md-4"> 							
+									<button type="button" ng-click="send();" class="btn btn-success sbold" ng-disabled="formForApp.$invalid&&userchoise.application||formForAG.$invalid&&userchoise.AG||!userchoise.AG&&!userchoise.application" style="width:200px;">Go to manage people</button>				
+									</div>
+      
+ </div>

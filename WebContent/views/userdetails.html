@@ -1,0 +1,246 @@
+ <style>
+.btn-normal {
+	font-size: 23px;
+	width: 23%;
+	border: 0px;
+}
+.has-error{
+border-color:#e73d4a ! important;
+}
+.no-error{
+border-color:#c2cad8 ! important;
+}
+.modal-content{
+min-width:50%;
+}</style>
+<div  ng-controller="UserDetailsController">
+ <div id="registerCallModal" class="modal fade" tabindex="-1"
+				data-width="860"  >
+				<div class="modal-content" style=" position:relative;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true"></button>
+					<h4 class="modal-title">Register Call Details</h4>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height: 425px;"
+						data-always-visible="1" data-rail-visible1="1">
+						
+						<div class="row" >
+							<div class="col-md-5">
+								<div class="form-group new-bar">
+								<label>Caller UserID:</label>
+									<div class="input-group input-large">
+									
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                            <input type="text" ng-model="UserID" class="form-control" placeholder="Caller UserID"> </div>
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+								<div class="form-group new-bar">
+								<label>Calling on behalf of:</label>
+									<div class="input-group input-large">
+									
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                            <input type="text" ng-model="affecteduserID" class="form-control" placeholder="ID of affected user"> </div>
+								</div>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="col-md-5">
+								<div class="form-group new-bar">
+								<label>Is there an existing incident?</label>
+									<div class="input-group input-large">
+<!-- <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate" style="width: 108px;"> -->
+<div class="bootstrap-switch-container" style="width: 159px; margin-left: 0px;">
+<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53px;"></span>
+<span class="bootstrap-switch-label" style="width: 53px;">&nbsp;</span>
+<span class="bootstrap-switch-handle-off bootstrap-switch-info" style="width: 53px;"></span>
+<input type="checkbox" class="make-switch" checked="" data-on-color="success" data-off-color="info" id="incidentexistence" onchange="incidentvaluechange()"></div></div> 
+<!--</div>  -->
+									
+                                                            </div>
+								</div>
+								
+								<div class="col-md-5 col-md-offset-1" ng-show="incidentexist=='yes'">
+								<div class="form-group new-bar">
+								<label>Incident Number:</label>
+									<div class="input-group input-large">
+									
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-info-circle"></i>
+                                                            </span>
+                                                            <input type="text" class="form-control {{verifynum}}" id="incidentNumber"  ng-blur="verifynumber()" ng-model="incidentnumber" placeholder="Incident Number"> </div>
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+							 <div  ng-show="incidentexist=='no'">
+								<div class="form-group new-bar " title="create case">
+								<label>Create a Case:</label>
+								<a
+								class="btn btn-circle btn-normal btn-icon-only btn-default disabled " style="width:10%;"
+								title="create case"  href="#">
+								<i class="glyphicon glyphicon-file font-grey-mint"></i>
+							</a>
+                                                            
+								</div>
+							</div> 
+							</div>
+							</div>
+							<div class="row">
+							<div class="col-md-5">
+								<div class="form-group new-bar">
+								
+									<div class="form-group">
+                                                <label>Reason for Call:</label>
+                                                <select class="form-control input-large" ng-model="callReason">
+                                                    <option>Delay in Resolution</option>
+                                                    <option>User Dissatisfaction</option>
+                                                   
+                                                </select>
+                                            </div>
+							</div>
+						</div>
+						<div class="col-md-5 col-md-offset-1">
+								<div class="form-group new-bar">
+								<label>Was the issue resolved over phone?</label>
+									<div class="input-group input-large">
+<!-- <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate" style="width: 108px;"> -->
+<div class="bootstrap-switch-container" style="width: 159px; margin-left: 0px;">
+<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53px;"></span>
+<span class="bootstrap-switch-label" style="width: 53px;">&nbsp;</span>
+<span class="bootstrap-switch-handle-off bootstrap-switch-info" style="width: 53px;"></span>
+<input type="checkbox" class="make-switch" checked="" data-on-color="success" data-off-color="info" id="resolved"></div></div> 
+<!--</div>  -->
+									
+                                                            </div>
+								</div></div>
+						
+							<div class="row">
+							<div class="col-md-5">
+								<div class="form-group new-bar">
+								<label>Start Time:</label>
+								 <!--  <p class="input-group input-large">
+                    <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="ctrl.picker3.date" is-open="ctrl.picker3.open" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.openCalendar($event, 'picker3')"><i class="fa fa-calendar"></i></button>
+              </span>
+                </p>  -->
+               <!--  <datetimepicker data-ng-model="data.date"></datetimepicker> -->
+									 <div class="input-group input-large">
+									
+                                                            
+                                                            <!-- <input type="datetime-local" class="form-control" ng-model="starttime" placeholder="Start Time"> -->
+                                                            <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="starttime" is-open="obj.opened" placeholder="loading">
+                                                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'starttime')"><i class="fa fa-clock-o"></i></button>
+            </span> </div>
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+								<div class="form-group new-bar">
+								<label>End Time:</label>
+									<div class="input-group input-large ">
+									
+                                                           
+                                                                
+                                                            
+                                                            <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="endtime" is-open="obj.endopened" placeholder="loading">
+                                                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openCalendarend($event, 'endtime')"><i class="fa fa-clock-o"></i></button>
+            </span>
+                                                            <!-- <input type="datetime-local" class="form-control" ng-model="endtime" placeholder="End Time"> --> </div>
+								</div>
+							</div>
+							</div>
+							
+					</div>
+					<div class="modal-footer">
+						<button type="button" ng-disabled="verifynum=='has-error'" data-dismiss="modal" onclick="registerCallDetails()"
+							class="btn btn-outline dark">Submit</button>
+						<button type="button" onclick="clearCallDetails()"  data-dismiss="modal" 
+							class="btn btn-outline dark">Close</button>
+					</div>
+					</div>
+				</div>
+
+
+				<!-- query_modal cLOSE -->
+
+			</div>
+ <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <!-- BEGIN PROFILE SIDEBAR -->
+                            <div class="profile-sidebar">
+                                <!-- PORTLET MAIN -->
+                                <div class="portlet light profile-sidebar-portlet bordered">
+                                    <!-- SIDEBAR USERPIC -->
+                                    <div class="profile-userpic">
+                                        <img src="http://wwwin.cisco.com/dir/photo/std/{{UserID}}.jpg" class="img-responsive" alt=""> </div>
+                                    <!-- END SIDEBAR USERPIC -->
+                                    <!-- SIDEBAR USER TITLE -->
+                                    <div class="profile-usertitle">
+                                        <div class="profile-usertitle-name"> {{caseCountSummary.userFullName}} </div>
+                                        <div class="profile-usertitle-job"> {{caseCountSummary.userJobTitle}} </div>
+                                        <span class="profile-desc-text"> Location: {{caseCountSummary.userLocation}} </span>
+                                    </div>
+                                    <!-- END SIDEBAR USER TITLE -->
+                                    <!-- SIDEBAR MENU -->  
+                                    
+                                    <div class="profile-usermenu">
+                                        <ul class="nav">
+                                        <li >
+                                               <a
+								class="btn btn-normal btn-circle btn-icon-only btn-default "
+								title="register call details" data-toggle="modal" data-target="#registerCallModal" href="#">
+								<i class="icon-notebook font-blue-steel"></i>Register Call Details
+							</a>
+                                            </li>
+                                        <li id="timeline_li">
+                                                <a id="timeline_anchor" ui-sref="userdetails.timeline({userID: UserID})">
+                                               
+                                                    <i class="icon-support" ></i> Timeline  </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="userdetails.support({userID: UserID})">
+                                                <span class="badge badge-warning pull-right"> {{caseCountSummary.userOpenCasesCount}} </span>
+                                                    <i class="icon-support" ></i> Support Cases </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="userdetails.chatHistory({userID: UserID})">
+                                               
+                                                    <i class="icon-bubble "></i> Chat History  </a>
+                                            </li>
+                                            <li >
+                                                <a ui-sref="userdetails.callHistory({userID: UserID})">
+                                                
+                                                    <i class="icon-earphones "></i> Call History </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- END MENU -->
+
+                                    
+                                </div>
+                                <!-- END PORTLET MAIN -->
+                                <!-- PORTLET MAIN -->
+                               
+                                <!-- END PORTLET MAIN -->
+                            </div>
+                            <!-- END BEGIN PROFILE SIDEBAR -->
+                            <!-- BEGIN TICKET DETAILS CONTENT -->
+                            <div class="app-ticket app-ticket-details app-ticket-config">
+                                <div class="row" ui-view>
+                                   
+                                </div>
+                            </div>
+                            <!-- END PROFILE CONTENT -->
+                        </div>
+                    </div>
+                   
+			</div>
+                   

@@ -1,0 +1,704 @@
+<style>
+.tab-content > .tab-pane:not(.active) {
+    display: block;
+    height: 0;
+    overflow-y: hidden;
+}
+.blue-madison{
+color:#578EBE;
+}
+.green-jungle{
+color:#26C281;
+}</style>
+<div ng-controller="alertDetailsController" id="alert_details_div">
+
+ <div id="case_modal" class="modal fade" tabindex="-1" data-width="760">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h4 class="modal-title">Create New Case</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="alert alert-success" ng-if="successMessage != '' ">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong ng-bind-html="successMessage"></strong>
+				</div>
+				<div ng-if="caseAddLoader">
+					<center>
+						<img src="assets/global/img/spinner.gif" style="width: 51px;" />
+					</center>
+				</div>
+				<div class="form-group">
+					<label for="single" class="control-label">Remedy Queue</label> <label >GSE-BCC</label>
+				</div>
+				<div class="form-group">
+					<label>Problem Description</label>
+					<textarea class="form-control new-change"
+						ng-model="problemDescription"></textarea>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" data-dismiss="modal"
+			class="btn btn-outline dark">Close</button>
+		<button type="button" class="btn red" ng-click="createCase()"
+			ng-disabled="successMessage != ''">Submit</button>
+	</div>
+</div>
+	<div class="row">
+	
+		<div class="col-lg-4 col-md-6 col-sm-12">
+		
+			<div class="portlet light mt-element-ribbon col-one"
+				ng-click="sayHello()">
+				<div
+					class="ribbon ribbon-vertical-right ribbon-color-warning uppercase small bold">
+					{{alertCount}}</div>
+				<div class="portlet-body drop-list" style="text-align: center;">
+					<!--<center><b><font size=4 color=#fed33b>Monitoring Alert queue</font></b></center>-->
+					<div class="dropdown" >
+						<div class="dropdown-toggle" data-toggle="dropdown">
+							<div class="portlet-title">
+
+								<div class="caption caption-md">
+									<i class="fa fa-bolt font-red-mint" ng-show="open"></i> <span
+										class="caption-subject font-grey-mint bold">
+										{{alert.track_name}}>>{{alert.alert_component}} </span><span
+										class="caption-helper hide"> weekly stats... </span>
+										<div ><span  class="caption-desc ">{{alert.kpi_name}}</span></div>
+									<div class="caption-desc font-grey-cascade">
+
+										{{alert.alert_create_date_unx}}
+										<h4 ng-style="customStyle.style" class=" in-portal ">{{alert.alert_mode}}</h4>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+						<ul class="dropdown-menu full-width ">
+							<div id="orderPro" class="scroller" style="height: 180px;">
+								<li ng-repeat="dropdown in dropdowns track by $index"><a
+									ui-sref="alertdetails({alertID: dropdown.alert_id})">
+										<div class="portlet-title">
+											<div class="caption caption-md">
+												<i class="fa fa-bolt font-red-mint"></i> <span
+													class="caption-subject font-grey-mint bold">
+													{{dropdown.track_name}}>>{{dropdown.alert_component}} </span><span
+													class="caption-helper hide"> weekly stats... </span>
+													<div ><span  class="caption caption-md">{{dropdown.kpi_name}}</span></div>
+												<div class="caption-desc font-grey-cascade">
+													<h4 class="font-red-mint in-portal  bold">{{dropdown.alert_mode}}</h4>
+													 {{dropdown.alert_create_date_unx}}
+
+												</div>
+											</div>
+								</a></li>
+								<li class="divider"></li>
+
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-8 col-md-6 col-sm-12">
+			<div class="portlet light mt-element-ribbon col-two">
+
+				<div class="portlet-body drop-list" style="text-align: center;">
+					<div class="dropdown">
+						<div class="dropdown-toggle" data-toggle="dropdown">
+							<div class="first-event caption caption-md font-grey-mint bold">Important Events</div>
+						</div>
+						<!-- <ul class="dropdown-menu full-width">
+							<div class="scroller" style="height: 180px;">
+								<li>
+									<div class="portlet-title">
+										<div class="event-title">
+											<h3 style="margin-left: 15px">Event 1</h3>
+										</div>
+										<div class="event-time font-grey-cascade">
+											<span style="margin-left: 15px;"> <span
+												class="font-grey-mint bold">Start time:</span>01/13 9:15 AM
+											</span> <span style="margin-left: 70px;"><span
+												class="font-grey-mint bold">End time:</span>01/13 10:15 AM </span>
+										</div>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="portlet-title">
+										<div class="event-title">
+											<h3 style="margin-left: 15px">Event 2</h3>
+										</div>
+										<div class="event-time font-grey-cascade">
+											<span style="margin-left: 15px;"> <span
+												class="font-grey-mint bold">Start time:</span>01/13 9:15 AM
+											</span> <span style="margin-left: 70px;"><span
+												class="font-grey-mint bold">End time:</span>01/13 10:15 AM </span>
+										</div>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<div class="portlet-title">
+										<div class="event-title">
+											<h3 style="margin-left: 15px">Event 3</h3>
+										</div>
+										<div class="event-time font-grey-cascade">
+											<span style="margin-left: 15px;"> <span
+												class="font-grey-mint bold">Start time:</span>01/13 9:15 AM
+											</span> <span style="margin-left: 70px;"><span
+												class="font-grey-mint bold">End time:</span>01/13 10:15 AM </span>
+										</div>
+									</div>
+								</li>
+							</div>
+						</ul> -->
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class=" col-lg-8 col-md-6 col-sm-12">
+			<div class="portlet light mt-element-ribbon"
+				style="min-height: 675px">
+				
+				
+				
+				
+
+				<div class="ribbon  ribbon-right  ribbon-color-default" style="cursor:pointer"
+					
+					ng-click="assigntome(alert.alert_assignee,alert.alert_id)">
+
+					{{alert.alert_assignee}}</div>
+					
+				<div class="modal fade" style="width:auto !important;" id="insertAssignee" role="dialog" >
+   					<div class="panel panel-default" style="margin:0px">
+      					<div class="panel-heading">
+         					<button type="button" class="close" data-dismiss="modal">&times;</button>
+         					<i class="fa fa-exclamation-triangle" style="color:red"></i> <b>ASSIGN ALERT</b>
+      					</div>
+      					<div class="panel-body" style="padding:5px">
+         				<!-- Modal content-->
+         					<div class="modal-body">
+            					<button class="btn btn-sm btn-success" style="border-radius: 5px !important"
+               							ng-click="clickedyes(required_alertid,0)" >
+            					<i class="glyphicon glyphicon-ok"></i> SELF
+            					</button>
+            					<button class="btn btn-sm btn-info" style="border-radius: 5px !important;"
+               							ng-click="showinputbox()" data-target="#insertAssignee">
+            					<i class="fa fa-user-plus" aria-hidden="true"></i> OTHERS
+            					</button>
+            					<button class="btn btn-sm btn-warning" ng-click="unassign(required_alertid,0)" style="border-radius: 5px !important;" id="unassignbtn">
+            					<i class="fa fa-user-times" aria-hidden="true"></i> UNASSIGN
+            					</button>
+            					<button class="btn btn-sm btn-danger" style="border-radius: 5px !important;" ng-click="clickedno()">
+            					<i class="glyphicon glyphicon-remove"></i>CLOSE
+            					</button>
+            					<span></span>
+            					<div class="alert alert-danger" id="invalidalert" style="margin-bottom:10px;margin-top:10px" hidden>
+               						<i class="fa fa-times-circle fa-2x" aria-hidden="true"></i> Not a valid Assignee
+            					</div>
+            					<div id="insertid" hidden style="margin-top:15px">
+               						<input type="text" ng-model="newuserid" data-container = "body" placeholder="Enter the id" class="form-control" />
+               						<div class="modal-footer" style="padding-right:0px">
+                  						<button class="btn  btn-success" style="border-radius: 5px !important;" ng-click="addassignee(required_alertid,newuserid)">Assign</button>
+                  						<button class="btn  btn-danger" style="border-radius: 5px !important;" data-dismiss="modal">Close</button>
+               						</div>
+            					</div>
+         					</div>
+      					</div>
+   					</div>
+				</div>
+					
+				<div class="portlet-title">
+					<div class="caption caption-md" >
+						<i class="fa fa-bolt font-red-mint" ng-show="open"></i><span class="caption-desc font-grey-cascade">{{alert.track_name}}>></span> <span
+							class="caption-subject font-grey-mint bold">{{alert.alert_component}}</span>
+																		<div ><span  class="caption-subject font-grey-mint bold ">{{alert.kpi_name}}</span></div>
+								
+									<div class="caption-subject font-grey-mint" >{{alert.alert_create_date_unx}} </div>
+												</div>
+						
+
+				</div>
+				<ul class="nav nav-tabs " style="float:right" >
+					<li class="active"><a data-target="#tab_current"
+						data-toggle="tab"> Current </a></li>
+					<li><a data-target="#tab_history" data-toggle="tab"> History </a></li>
+				</ul>			
+				<div class="tab-content">
+				<div class="tab-pane active" id="tab_current"  >
+				<div class="row">
+					<div class="col-md-3">
+						<h4 ng-style="customStyle.style" class=" in-portal bold">{{alert.alert_mode}}</h4>
+
+					</div>
+					<div class="col-md-2 col-md-offset-8 text-right">
+
+
+						<div class="actions input-group-btn">
+							 <!-- <button
+								class="btn   btn-normal btn-circle btn-icon-only btn-default"
+								title="Create Case" ng-click="openCaseClick()">
+								<i class="icon-tag"></i>
+							</button> -->
+							<button
+								class="btn btn-normal btn-circle btn-icon-only btn-default"
+								title="Close" ng-click="closealert(alert.alert_id)">
+								<i class="icon-close"></i>
+							</button>
+							<button
+								class="btn btn-normal btn-circle btn-icon-only btn-default"
+								title="Initiate CIO-D workflow" href="#"> <i
+								class="icon-arrow-up"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row number-stats margin-bottom-10">
+						<div class="col-md-3 col-sm-6 col-xs-6">
+							<div class="stat-left">
+								<div class="stat-number">
+									<div class="title">Threshold</div>
+									<div class="number">{{alert.entry_threshold}}</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-6">
+							<div class="stat-right">
+								<div class="stat-chart">
+									<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+									<div id="sparkline_bar2"></div>
+								</div>
+								<div class="stat-number">
+									<div class="title">Current</div>
+									<div class="number bold">{{alert.current_value}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					<div class="col-md-6 col-sm-6 col-xs-6" id="containerZ" class="contains-chart"></div>
+					<div class=" col-md-6 col-sm-6 col-xs-6">
+					 <span
+							class="caption-subject font-grey-mint bold uppercase">Comments</span>
+							<div class="portlet-input input-inline input-small " style="float:right">
+                                                    <div class="input-icon right">
+                                                        <i class="icon-magnifier"></i>
+                                                        <input type="text" ng-model="filtercomments" class="form-control form-control-solid input-circle" placeholder="search..."> </div>
+                                                </div>
+					<div class="chat-form">
+									<form>
+										<div class="input-group">
+											<input type="text" placeholder="Enter comment"
+												ng-model="comment" class="form-control"> <span
+												class="input-group-btn">
+												<button class="btn blue pull-right"
+													ng-click="save_comment()" type="button">Submit</button>
+											</span>
+										</div>
+									</form>
+								</div>
+				
+					<!-- <div class="slimScrollDiv "
+						style="position: relative; overflow: hidden; width: auto; height: 300px;"> -->
+						<!-- <div class="scroller"
+							style="height: 300px; overflow: hidden; width: auto;"
+							data-always-visible="1" data-rail-visible1="0"
+							data-handle-color="#D7DCE2" data-initialized="1"> -->
+							<div class="scroller" style="height: 300px;"
+						data-always-visible="1" data-rail-visible1="1" data-handle-color="#D7DCE2">
+							<div class="general-item-list">
+								<div class="item"
+									ng-repeat="alertComment in alertComments| orderBy:'-TIME'| filter:filtercomments">
+									<div class="item-head">
+										<div class="item-details">
+										<span class="fa fa-comments blue-madison"></span>
+											<a href="" class="item-name primary-link">{{alertComment.REACH}}</a>
+											<span class="item-label">{{alertComment.TIME}}</span>
+										</div>
+										<span class="item-status">  <span class="badge badge-empty badge-success"></span>
+										</span>
+									</div>
+									<div class="item-body">{{alertComment.COMMENT}}</div>
+								</div>
+
+								
+
+							</div>
+						</div>
+						<!-- <div class="slimScrollBar"
+							style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 156.499px; background: rgb(215, 220, 226);"></div>
+						<div class="slimScrollRail"
+							style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div> -->
+					<!-- </div> -->
+					</div>
+					</div>
+				</div>
+					
+				<!-- <div class="row">
+
+				<div class="col-md-6 col-sm-6 col-xs-6">
+					<h4>Past Occurences</h4>
+					<div class="wrap">
+						<table class="head" style="width: 100%;">
+							<tr>
+								<td>Alert Date</td>
+								<td>Max Value</td>
+
+							</tr>
+						</table>
+						<div class="inner_table">
+							<div class="scroller" style="height: 150px;">
+								<table style="width: 100%;">
+									<tr
+										ng-repeat="detail in details| orderBy:['-ALERT_DATE','-ALERT_AS_OF']">
+										<td>{{detail.ALERT_DATE}} {{detail.ALERT_AS_OF}}</td>
+										<td>{{detail.CURRENT_THRESHOLD}}</td>
+
+									</tr>
+
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div> -->
+				</div>
+				<div class="tab-pane " id="tab_history"  >
+				<div class="row">
+					
+					<div class="col-md-6 col-sm-6 col-xs-6" id="containerY" class="contains-chart"></div>
+					<div class=" col-md-6 col-sm-6 col-xs-6">
+					 <span
+							class="caption-subject font-grey-mint bold uppercase" ng-if="pastComments.length>0">Comments</span>
+							
+							 <!--<div class="portlet-input input-inline input-small " style="float:right">
+                                                    <div class="input-icon right">
+                                                        <i class="icon-magnifier"></i>
+                                                        <input type="text" ng-model="filtercomments" class="form-control form-control-solid input-circle" placeholder="search..."> </div> 
+                                                </div>-->
+					 
+				
+					<!-- <div class="slimScrollDiv "
+						style="position: relative; overflow: hidden; width: auto; height: 300px;">
+						<div class="scroller"
+							style="height: 300px; overflow: hidden; width: auto;"
+							data-always-visible="1" data-rail-visible1="0"
+							data-handle-color="#D7DCE2" data-initialized="1"> -->
+							<div class="scroller" style="height: 300px;"
+						data-always-visible="1" data-rail-visible1="1" data-handle-color="#D7DCE2">
+							<div class="general-item-list">
+								<div class="item"
+									ng-repeat="pastComment in pastComments| orderBy:'-TIME'">
+									<div class="item-head">
+										<div class="item-details">
+										<span class="fa fa-comments blue-madison"></span>
+											<a href="" class="item-name primary-link">{{pastComment.REACH}}</a>
+											<span class="item-label">{{pastComment.TIME}}</span>
+										</div>
+										<span class="item-status">  <span class="badge badge-empty badge-success"></span>
+										</span>
+									</div>
+									<div class="item-body">{{pastComment.COMMENT}}</div>
+								</div>
+
+								
+
+							</div>
+						</div>
+						<!-- <div class="slimScrollBar"
+							style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 156.499px; background: rgb(215, 220, 226);"></div>
+						<div class="slimScrollRail"
+							style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div> -->
+					<!-- </div> -->
+					</div>
+					</div></div>
+				</div>
+				</div>
+			<!-- <div class="portlet light mt-element-ribbon" style="min-height: 250px;">
+				
+	<div class="portlet-title">
+					
+				</div>
+				<div class="portlet-body">
+				
+				</div>
+		
+
+			</div> -->
+		
+			
+		</div>
+
+
+		<!-- <div class="col-lg-4 col-md-6 col-sm-12">
+			<div class="portlet light mt-element-ribbon"
+				style="min-height: 642px;">
+
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-dark hide"></i> <span
+							class="caption-subject font-grey-mint bold uppercase">Comments</span>
+						<span class="caption-helper"></span>
+					</div>
+					<div class="inputs">
+						<div class="portlet-input input-inline input-small ">
+                                                    <div class="input-icon right">
+                                                        <i class="icon-magnifier"></i>
+                                                        <input type="text" class="form-control form-control-solid input-circle" placeholder="search..."> </div>
+                                                </div>
+					</div>
+				</div>
+				<div class="portlet-body">
+				<div class="chat-form">
+									<form>
+										<div class="input-group">
+											<input type="text" placeholder="Enter comment"
+												ng-model="comment" class="form-control"> <span
+												class="input-group-btn">
+												<button class="btn blue pull-right"
+													ng-click="save_comment()" type="button">Submit</button>
+											</span>
+										</div>
+									</form>
+								</div>
+				
+					<div class="slimScrollDiv"
+						style="position: relative; overflow: hidden; width: auto; height: 338px;">
+						<div class="scroller"
+							style="height: 338px; overflow: hidden; width: auto;"
+							data-always-visible="1" data-rail-visible1="0"
+							data-handle-color="#D7DCE2" data-initialized="1">
+							<div class="general-item-list">
+								<div class="item"
+									ng-repeat="alertComment in alertComments| orderBy:'-TIME'">
+									<div class="item-head">
+										<div class="item-details">
+											<a href="" class="item-name primary-link">{{alertComment.REACH}}</a>
+											<span class="item-label">{{alertComment.TIME}}</span>
+										</div>
+										<span class="item-status">  <span class="badge badge-empty badge-success"></span>
+										</span>
+									</div>
+									<div class="item-body">{{alertComment.COMMENT}}</div>
+								</div>
+
+								
+
+							</div>
+						</div>
+						<div class="slimScrollBar"
+							style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 156.499px; background: rgb(215, 220, 226);"></div>
+						<div class="slimScrollRail"
+							style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div>
+					</div>
+				</div>
+
+			</div>
+		</div> -->
+		<div class="col-lg-4 col-md-6 col-sm-12" >
+			<div class="portlet light mt-element-ribbon"
+				style="min-height: 250px;">
+				<div class="portlet-title ">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-dark hide"></i> <span
+							class="caption-subject font-grey-mint bold uppercase">Sme
+							Information </span>
+							
+					</div>
+					<div class="col-md-4 col-md-offset-3"> <button
+								class="btn   btn-normal btn-circle btn-icon-only btn-default "
+								title="Refresh" style="float:right;"ng-click="locatesme(alert.track_id)">
+								<i class="icon-refresh"></i>
+							</button></div>
+				</div>
+				<div class="portlet-body">
+					<!-- <ul class="feeds" ng-repeat="sme in smeList">
+						<li>
+							<div class="col1">
+								<div class="cont">
+									<div class="cont-col1">
+										<div class="label label-info">
+											<i class="icon-user"></i>
+										</div>
+									</div>
+									<div class="cont-col2">
+										<div class="desc">{{sme}}</div>
+									</div>
+								</div>
+							</div>
+							<div class="col2">
+								<div class="date"></div>
+							</div>
+						</li>
+
+					</ul> -->
+					
+					<div class="scroller col-md-offset-1 col-md-10" style="height:200px">
+					<table class="roster-list" id="sme_jabber_table"  >
+                        <thead> 
+                            <tr>
+                                <th style="border:0px;">SME</th>
+                               	<th style="border:0px;display:none;"><font size=2>CEC</font></th>
+                               	
+                                <th style="float:right;">Status</th>
+                                
+                            </tr>
+                            </thead>
+                               <tbody>
+                            
+                            
+                            <!-- <tr ng-repeat="sme in smeList track by $index">
+                            <td>{{sme}}</td>
+                          
+                            <td></td>
+                            
+                            </tr>  -->
+                            
+                            
+                            </tbody>
+                        </table>	
+                        </div>
+				</div>
+			</div>
+			<div class="portlet light mt-element-ribbon"
+				style="min-height:450px;">
+				<div class="portlet-title">
+					<div class="help-search">
+						<div class="input-group">
+							<input type="text" class="form-control"
+								placeholder="Search for knowledge articles"
+								ng-model="searchText" ng-change="getQuestions()" name="q">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="portlet-body">
+					<div class="panel-group accordion faq-content" id="accordion1">
+						<div class="col-lg-12 adjust-margin no-padding">
+							<b>Articles to help resolve user issue</b>
+						</div>
+						<div id="loadingwait" ng-show="showLoad">
+							<div id="loadingspinner" style="min-height: 305px;">
+								<center>
+									<img src="assets/global/img/spinner.gif"
+										style="width: 51px; margin-top: 130px;"><br>&nbsp;FAQ
+									Loading...
+								</center>
+							</div>
+						</div>
+
+						<div class="panel panel-default new-panel" style="border: none;">
+						<div ng-if="mainquerypresent" >
+						<span class="fa fa-check fa-1x font-red-mint"></span>
+						<a  href="#query_modal" ng-click="getQuestionAns(mainquery.nid)"
+								data-toggle="modal">{{mainquery.subject}}</a> </div>
+							<div ng-repeat="query in queries | filter:searchText">
+							<!-- href="#query_modal" -->
+<span class="fa fa-book fa-1x blue-madison"></span>
+							 <a  href="#query_modal" ng-click="getQuestionAns(query.nid)"
+								data-toggle="modal">{{query.subject}}</a> 
+								
+								
+							<!-- href="#query_modal" -->
+
+						</div>
+						
+							<div ng-repeat="rkmquery in rkmqueries | filter:searchText">
+							<!-- href="#query_modal" -->
+<span class="fa fa-briefcase fa-1x green-jungle"></span>
+							 <a  target="blank" href="https://itst-stg.cisco.com:5431/arsys/forms/itstapp/RKM%3AKnowledgeArticleManager/Display+View/?eid={{rkmquery.linkID}}"
+								data-toggle="modal">{{rkmquery.Title}}</a> 
+								
+							<!-- href="#query_modal" -->
+
+						</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="help-issues">
+					
+					<div class="col-lg-12 no-padding">
+						<a>How to check order status?</a>
+					</div>
+					<div class="col-lg-12 adjust-margin no-padding normal-text">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+						enim ad minim veniam,</div>
+					<div class="col-lg-12 no-padding">
+						<a>Why cant I see my sales commissions?</a>
+					</div>
+					<div class="col-lg-12 adjust-margin no-padding normal-text">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+						enim ad minim veniam,</div>
+					<div class="col-lg-12 no-padding">
+						<a>How to check order status?</a>
+					</div>
+					<div class="col-lg-12 adjust-margin no-padding normal-text">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+						enim ad minim veniam,</div>
+				</div> -->
+
+			</div>
+			<div id="query_modal" class="modal fade" tabindex="-1"
+				data-width="660">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true"></button>
+					<h4 class="modal-title">{{answer.subject}}</h4>
+					<label ng-if= "answer.type=='KEDB'" ng-bind-html="answer['ke #']"></label>
+									<label ng-if= "answer.type=='Document'" ng-bind-html="answer['document #']"></label>
+				</div>
+				<div class="modal-body">
+					<div class="scroller" style="height: 425px;"
+						data-always-visible="1" data-rail-visible1="1">
+						<div class="row" ng-show="showAnsLoad">
+							<div class="col-md-12">Answer is loading...</div>
+						</div>
+						<div class="row" ng-show="!showAnsLoad">
+							<div class="col-md-12">
+								<div class="form-group new-bar">
+									<label ng-if= "answer.type=='KEDB'" ng-bind-html="answer.solution"></label>
+									<label ng-if= "answer.type=='Document'" ng-bind-html="answer.content"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal"
+							class="btn btn-outline dark">Close</button>
+					</div>
+				</div>
+
+
+				<!-- query_modal cLOSE -->
+
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+.btn-normal {
+	font-size: 23px;
+	width: 23%;
+	border: 0px;
+}
+</style>

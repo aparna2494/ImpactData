@@ -1,0 +1,625 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="CCWFlowController">
+<div class="row" >
+
+				<div id="element1" class="col-lg-2 col-md-2 col-sm-2">
+					<!-- BEGIN PORTLET-->
+					<div  class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title" >
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Quotes Initiated</span> <span class="caption-helper hide">Quotes Initiated</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="quotesinitiated">{{quotesinitiated}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa  fa-4x {{quotesinitiatedicon}}" style="color:{{quotesinitiatedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="quotesinitiatedcomment">{{quotesinitiatedcomment}}</h4>
+								
+								<div class="mt-action-icon " ><span class="label label-warning"   ng-model="quotesinitiatedauthor">{{quotesinitiatedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{quotesinitiatedcommentdisplay}}"></i></div>
+								
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+	
+	<div id="element2" class="col-md-offset-1 col-lg-2 col-md-2 col-sm-2 col-lg-offset-1 col-sm-offset-1">
+					<!-- BEGIN PORTLET-->
+					<div  class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Quotes Submitted</span> <span class="caption-helper hide">Quotes Submitted</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="quotessubmitted">{{quotessubmitted}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa  fa-4x {{quotessubmittedicon}}" style="color:{{quotessubmittedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="quotessubmittedcomment">{{quotessubmittedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="quotessubmittedauthor">{{quotessubmittedauthor}}</span><i class="fa float-right font-grey-mint fa-comments	 fa-2x " style="display:{{quotessubmittedcommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element3" class="col-lg-2 col-md-2 col-sm-2">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Quotes AIP</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="quotesAIP">{{quotesAIP}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa  fa-4x {{quotesAIPicon}}" style="color:{{quotesAIPthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="quotesAIPcomment">{{quotesAIPcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="quotesAIPauthor">{{quotesAIPauthor}}</span>
+								<i class="fa popovers float-right font-grey-mint fa-comments fa-2x " data-html="true" data-container="body" data-trigger="click" data-placement="bottom" data-content="<form><textarea  rows='3'></textarea><button onclick='submit()' class='btn btn-sm  blue'><i class='  fa fa-check'></i></button></form>" data-original-title="Quotes AIP" style="display:{{quotesAIPcommentdisplay}};display:block;"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element4" class="col-sm-offset-1col-lg-2 col-md-2 col-sm-2 col-lg-offset-1 col-sm-offset-1">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Approved Quotes</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="approvedquotes">{{approvedquotes}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa  fa-4x {{approvedquotesicon}} " style="color:{{approvedquotesthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="approvedquotescomment">{{approvedquotescomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="approvedquotesauthor">{{approvedquotesauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{approvedquotescommentdisplay}}"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element5" class="col-lg-2 col-md-2 col-sm-2">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Expired Quotes</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="expiredquotes">{{expiredquotes}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{expiredquotesicon}}" style="color:{{expiredquotesthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="expiredquotescomment">{{expiredquotescomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="expiredquotesauthor">{{expiredquotesauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{expiredquotescommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+</div>
+<div class="row">
+<div id="element6" class="col-md-offset-3 col-lg-2 col-md-2 col-sm-2 col-lg-offset-3 col-sm-offset-3">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Lost Quotes</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number ">
+											
+											<div class="number bold" ng-model="lostquotes">{{lostquotes}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{lostquotesicon}}" style="color:{{lostquotesthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="lostquotescomment">{{lostquotescomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="lostquotesauthor">{{lostquotesauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{lostquotescommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element7" class="col-md-offset-3 col-lg-2 col-md-2 col-sm-2 col-lg-offset-3 col-sm-offset-3">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Rejected Quotes</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="rejectedquotes">{{rejectedquotes}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{rejectedquotesicon}}" style="color:{{rejectedquotesthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="rejectedquotescomment">{{rejectedquotescomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="rejectedquotesauthor">{{rejectedquotesauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{rejectedquotescommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+</div>
+
+<div class="row">
+<div id="element8" class=" col-lg-2 col-md-2 col-sm-2 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Quotes Submitted</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="quotessubmitted">{{quotessubmitted}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{quotessubmittedicon}}" style="color:{{quotessubmittedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="quotessubmittedcomment">{{quotessubmittedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="quotessubmittedauthor">{{quotessubmittedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{quotessubmittedcommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element9" class=" col-lg-2 col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold" style="font-size:14px;">Quotes where Order Initiated</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="quoteswhereorderinitiated">{{quoteswhereorderinitiated}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{quoteswhereorderinitiatedicon}}" style="color:{{quoteswhereorderinitiatedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="quoteswhereorderinitiatedcomment">{{quoteswhereorderinitiatedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="quoteswhereorderinitiatedauthor">{{quoteswhereorderinitiatedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{quoteswhereorderinitiatedcommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element10" class=" col-lg-2 col-md-2 col-sm-2 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Order Initiated</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="orderinitiated">{{orderinitiated}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa  fa-4x {{orderinitiatedicon}}" style="color:{{orderinitiatedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="orderinitiatedcomment">{{orderinitiatedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="orderinitiatedauthor">{{orderinitiatedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{orderinitiatedcommentdisplay}}"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element11" class=" col-lg-2 col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Orders In Error</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="ordersinerror">{{ordersinerror}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{ordersinerroricon}}" style="color:{{ordersinerrorthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="ordersinerrorcomment">{{ordersinerrorcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="ordersinerrorauthor">{{ordersinerrorauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{ordersinerrorcommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element12" class=" col-lg-2 col-md-2 col-sm-2 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Orders Submitted</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="orderssubmitted">{{orderssubmitted}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{orderssubmittedicon}}" style="color:{{orderssubmittedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="orderssubmittedcomment">{{orderssubmittedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="orderssubmittedauthor">{{orderssubmittedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x "  style="display:{{orderssubmittedcommentdisplay}}"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+</div>
+<div class="row">
+
+<div id="element13" class=" col-lg-2 col-md-2 col-sm-2 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Orders Submitted</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="orderssubmitted">{{orderssubmitted}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{orderssubmittedicon}}" style="color:{{orderssubmittedthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="orderssubmittedcomment">{{orderssubmittedcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="orderssubmittedauthor">{{orderssubmittedauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{orderssubmittedcommentdisplay}}"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element14" class=" col-lg-2 col-md-2 col-sm-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold" style="font-size:13px;">Orders Stuck for SO# generation</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="ordersstuck">{{ordersstuck}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{ordersstuckicon}}" style="color:{{ordersstuckthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="ordersstuckcomment">{{ordersstuckcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="ordersstuckauthor">{{ordersstuckauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{ordersstuckcommentdisplay}}"></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+<div id="element15" class=" col-lg-2 col-md-2 col-sm-2 ">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light mt-element-ribbon">
+						
+						<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class=" font-red-mint"></i> <span
+									class="caption-subject font-grey-mint bold">Orders Entered</span> <span class="caption-helper hide">weekly
+									stats...</span>
+								<div class="caption-desc font-grey-cascade"></div>
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="row number-stats margin-bottom-10">
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-left">
+										<div class="stat-number">
+											
+											<div class="number bold" ng-model="ordersentered">{{ordersentered}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<div class="stat-right">
+										<div class="stat-chart">
+											<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+											<div id="sparkline_bar2"><i class="fa fa-4x {{ordersenteredicon}}" style="color:{{ordersenteredthreshold}}"></i></div>
+										</div>
+										
+									</div>
+								</div>
+								<h4 class=" in-portal " ng-model="ordersenteredcomment">{{ordersenteredcomment}}</h4>
+								<div class="mt-action-icon "><span class="label label-warning"   ng-model="ordersenteredauthor">{{ordersenteredauthor}}</span><i class="fa float-right font-grey-mint fa-comments fa-2x " style="display:{{ordersenteredcommentdisplay}}" ></i></div>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				
+</div>
+</div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<style>
+	.float-right{
+	float:right;}
+	.row{
+min-height:100px;	}
+</style>
+<!-- BEGIN MAIN JS & CSS -->

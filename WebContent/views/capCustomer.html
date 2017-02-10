@@ -1,0 +1,114 @@
+<style type="text/css">
+	
+	 table{
+		
+		font-size: 105%;
+	
+	}
+	
+	td{
+	
+		width: 20%;
+	
+	}
+	
+	a{
+		text-decoration:none;		
+		cursor: pointer;
+	}
+	
+	ul{
+	
+		list-style: none;
+		cursor: pointer;	
+		
+	}
+	
+	.abc{
+	
+	}
+	.esc{
+	
+		color: red;
+	}
+	
+	.glyphicon-flag{
+		
+		font-size: 160%;
+	
+	}
+	
+	.nonesc{
+	
+		color: green;
+	}
+	
+	.hideflag{
+		display : none;
+	}
+	
+	
+	
+	</style>	
+	<div class="container-fluid">
+  	
+  	<div class="row">
+  		<div class="col-md-12">
+  			<div class="panel panel-default">
+  				<div class="panel-body">
+
+  					<div class="row">
+  						<div class="col-md-12" ng-controller="CustData">
+  									
+							
+							<div id="loadingimage" class="text-center loading-dots" ng-hide="dataloaded">
+							  Loading data <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
+							</div>
+							
+							 <table id="tab"  class="table table-bordered table-striped"  ng-show="dataloaded">
+							  	<thead>
+							  		<tr>
+										<td class="text-center"> <b>Customer</b></td>
+										<td class="text-center"><b>Q2O - Commerce</b></td>
+										<td class="text-center"><b>OM - Order Processing</b></td>
+										<td class="text-center"><b>SCM - Fulfillment</b></td>
+										<td class="text-center"><b>FINI2C - Invoice</b></td>
+							  		</tr>
+							  	</thead>
+							  		<tbody ng-repeat="d in data">
+								  	<tr>
+									  	<td class="text-center" rowspan = "{{d.listlength}}">{{d.customer_name}}</td>
+								  		 <td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.Q2O[0].cet_value, 'nonesc' : d.Q2O[0].cet_value == 0, 'hideflag' : d.Q2O[0].cet_value !=0 }"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.Q2O[0].incident_number)">{{d.Q2O[0].incident_number}}</a></td>
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.OM[0].cet_value, 'nonesc' : d.OM[0].cet_value == 0, 'hideflag' : d.OM[0].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.OM[0].incident_number)">{{d.OM[0].incident_number}}</a></td>
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.SCM[0].cet_value, 'nonesc' : d.SCM[0].cet_value == 0, 'hideflag' : d.SCM[0].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.SCM[0].incident_number)">{{d.SCM[0].incident_number}}</a></td>	
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.FINI2C[0].cet_value, 'nonesc' : d.FINI2C[0].cet_value == 0, 'hideflag' : d.FINI2C[0].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.FINI2C[0].incident_number)">{{d.FINI2C[0].incident_number}}</a></td> 
+								  	</tr> 
+								  	<tr ng-repeat="i in d.index">
+									  	<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.Q2O[0].cet_value, 'nonesc' : d.Q20[i].cet_value == 0, 'hideflag' : d.Q20[i].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.Q2O[i].incident_number)">{{d.Q2O[i].incident_number}}</td>
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.OM[0].cet_value, 'nonesc' : d.OM[i].cet_value == 0, 'hideflag' : d.OM[i].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.OM[i].incident_number)">{{d.OM[i].incident_number}}</td>
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.SCM[0].cet_value, 'nonesc' : d.SCM[i].cet_value == 0, 'hideflag' : d.SCM[i].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.SCM[i].incident_number)">{{d.SCM[i].incident_number}}</td>	
+								  		<td class="text-center"><span class="glyphicon glyphicon-flag" ng-class="{'esc' : d.FINI2C[0].cet_value, 'nonesc' : d.FINI2C[i].cet_value == 0, 'hideflag' : d.FINI2C[i].cet_value !=0}"></span>&nbsp;&nbsp;<a ng-click="redirectToLink(d.FINI2C[i].incident_number)">{{d.FINI2C[i].incident_number}}</td>				  	
+								  	</tr> 
+							  	
+							  	
+							  	</tbody>
+							  </table>	  	
+							
+  						</div>
+  					</div>
+  					<!-- end of 2nd row - table row -->
+  					<br>
+  					<div class="row">
+  						<div class="col-md-12">
+  						
+  							
+  						</div>
+  					</div>
+  					
+  				</div>
+  			</div>
+  		</div>
+  		
+  	</div>
+  	
+  </div>

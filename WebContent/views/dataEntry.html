@@ -1,0 +1,128 @@
+
+
+                            <!-- BEGIN SAMPLE FORM PORTLET-->
+                            <div class="portlet light " ng-controller="dataEntryController">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-pencil font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> Node Data Entry</span>
+                                    </div>
+                                   
+                                </div>
+                                <div class="portlet-body form">
+                                    <form role="form">
+                                        <div class="form-body">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Component Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-settings"></i>
+                                                    </span>
+                                                    <input type="text" ng-model="componentName" class="form-control" placeholder="Component Name"> </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Weight</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="weight" placeholder="Weight" > </div>
+                                            </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4">
+                                             <div class="form-group">
+                                                <label>Track Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="trackName" placeholder="Track Name" > </div>
+                                            </div>
+                                            </div>
+                                           
+                                            </div>
+                                            
+                                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i> KPI Data </div>
+                                    <div class="tools">
+                                     <addkpibutton ></addkpibutton>
+                                       
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    
+                                        <div class="form-body">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                        
+   
+    
+
+                                            <div class="form-group ">
+                                                <label class="control-label">KPI Name</label>
+                                                <input type="text" class="form-control" ng-model="kpiName[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">KPI Status</label>
+                                                <input type="text" class="form-control" ng-model="kpiStatus[0]"> </div>
+                                                 </div>
+                                                 <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">SKMS ID</label>
+                                                <input type="text" class="form-control" ng-model="skmsId[0]"> </div>
+                                                 </div>
+                                                <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="control-label">Threshold for Critical</label>
+                                                <input type="text" class="form-control" ng-model="criticalThreshold[0]"> </div>
+                                                </div></div>
+                                                <div class="row">
+                                        <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for High</label>
+                                                <input type="text" class="form-control" ng-model="highThreshold[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                 <div class="form-group ">
+                                                <label class="control-label">Threshold for Medium</label>
+                                                <input type="text" class="form-control" ng-model="mediumThreshold[0]"> </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                <div class="form-group ">
+                                                <label class="control-label">Database</label>
+                                                <input type="text" class="form-control" ng-model="database[0]"> </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                <div class="col-md-12">
+                                                <div class="form-group ">
+                                                <label class="control-label">Query</label>
+                                                <textarea class="form-control" ng-model="query[0]"></textarea> </div>
+                                                </div>
+                                                </div>
+                                        </div>
+                                        
+                                        
+                                       
+                                   
+                                </div>
+                                
+                            </div>
+                                            <div id="space-for-buttons"></div>
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn blue" ng-click="saveNodeData()">Submit</button>
+                                            <button type="button" class="btn default">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                           

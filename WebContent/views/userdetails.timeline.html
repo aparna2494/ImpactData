@@ -1,0 +1,48 @@
+<div ng-controller="UserTimelineController">
+								<div id="loadingimage" class="text-center loading-dots" ng-hide="dataloaded">
+										<div id="loadingspinner" style="min-height: 305px;">
+																
+																	<img src="assets/global/img/loading-spinner-blue.gif"
+																		style="width: 51px; margin-top: 130px;"><br>&nbsp;Loading TimeLine..
+																
+															</div>
+									</div>
+<div class="portlet light portlet-fit bordered" ng-show="dataloaded">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-microphone font-green"></i> <span
+				class="caption-subject bold font-green uppercase"> Timeline</span> <span
+				class="caption-helper">support events</span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<div class="timeline">
+			<!-- TIMELINE ITEM -->
+			<div class="timeline-item" ng-repeat="item in timelineSummary track by $index">
+				<div class="timeline-badge">
+					<div class="timeline-icon">
+						<i class="{{item.customClass}}"></i>
+					</div>
+				</div>
+				<div class="timeline-body" >
+					<div class="timeline-body-arrow"></div> 
+					<div class="timeline-body-head">
+						<div class="timeline-body-head-caption">
+							<a href="javascript:;"
+								class="timeline-body-title font-blue-madison">{{item.activity}}</a> <span
+								class="timeline-body-time font-grey-cascade">{{item.activitytime}}</span>
+						</div>
+						<div class="timeline-body-head-actions">
+						{{item.activityStatus}}
+						</div>
+					</div>
+					<div class="timeline-body-content">
+						<span class="font-grey-cascade" ui-sref="incidentdetails({incidentNumber: item.activityID})"> {{item.activityID}}    </span>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+</div>

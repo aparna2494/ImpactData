@@ -1,0 +1,158 @@
+<style type="text/css">
+.margin-left-10{
+margin-left:10px;
+}
+.figure--highlight figcaption{padding-left:1.3125rem;}
+.figure--highlight figcaption:before{content:'';position:absolute;left:0;top:0;width:.25rem;height:100%;background-color:#abc233;margin-left:5px;}  
+        .bs-example {
+            position: relative;
+            padding: 45px 15px 15px;
+            margin: 0 -15px 15px;
+            background-color: #fafafa;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
+            border-color: #e5e5e5 #eee #eee;
+            border-style: solid;
+            border-width: 1px 0;
+        }
+        
+        .bs-example:after {
+            content: "Example";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #bbb;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .highlight {
+            padding: 9px 14px;
+            margin-bottom: 14px;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+            border-radius: 4px;
+        }
+        
+        .bs-example+.highlight {
+            margin: -15px -15px 15px;
+            border-radius: 0;
+            border-width: 0 0 1px;
+        }
+        
+        @media (min-width: 768px) {
+            .bs-example {
+                margin-left: 0;
+                margin-right: 0;
+                background-color: #fff;
+                border-width: 1px;
+                border-color: #ddd;
+                border-radius: 4px 4px 0 0;
+                box-shadow: none;
+            }
+            .bs-example+.highlight {
+                margin-top: -16px;
+                margin-left: 0;
+                margin-right: 0;
+                border-width: 1px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+        }
+        
+        .dn-timepicker-popup {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+ 
+</style>
+ <div class="row" style="min-height: 550px; margin-left: 10px">
+       
+      <div class="row margin-top-20" ng-hide="result" >
+          <div style="min-height: 350px"> 
+              <div class="col-md-4">
+       <h4>Please, chose the date</h4>
+          <div class="form-group">
+                <div class='input-group date'>
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="selectedDate.date" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                   <span class="input-group-btn">
+                       <button type="button" class="btn btn-default" ng-click="open2()"><i class="fa fa-calendar"></i></button>
+                   </span>
+               </div>
+           </div>
+       
+         </div>
+       <div class="col-md-12">
+    <h4>Time Zone: Pacific Daylight Time (PDT), UTC -7</h4>  
+    </div>
+
+  <div class="margin-left-10" >
+        <div class="col-md-12 margin-bottom-10" ng-repeat="member in members track by $index">
+      <fieldset>
+     <figure class="figure--highlight">
+        <figcaption>
+           <strong>{{member.userName}}</strong><span> - {{member.title}}</span>
+                  <div>
+                       <span>Start Shift</span>
+                       <div class="col-md-3 input-group"
+                                   moment-picker="member.shiftStartTime"
+                                  format="HH:mm" 
+                                  >
+                          <input name="member.userID" class="form-control"
+                               placeholder="Start Shift"
+                               ng-model="member.shiftStartTime"
+                               ng-model-options="{ updateOn: 'blur' }"
+                               >
+                            <span class="input-group-addon">
+                                   <i class="fa fa-clock-o"></i>
+                            </span>
+                           
+                            </div>
+                          <span style="color: red;" ng-show="convert(member.shiftStartTime)+59>=convert(member.shiftEndTime)">Start shift has to be early than End Shift for 1 hour<br></span>
+                        <span>End Shift</span>
+                        <div class="col-md-3 input-group"
+                                   moment-picker="member.shiftEndTime"
+                                  format="HH:mm">
+                      <input name="member.userID" class="form-control"
+                             placeholder="End Shift"
+                             ng-model="member.shiftEndTime"
+                             ng-model-options="{ updateOn: 'blur' }"
+                           >
+                                 <span class="input-group-addon">
+                                     <i class="fa fa-clock-o"></i>
+                                 </span>
+                                 
+                                 </div>
+                      <span style="color: red;" ng-show="convert(member.shiftStartTime)+59>=convert(member.shiftEndTime)">Start shift has to be early than End Shift for 1 hour<br></span>
+                   </div>
+            </figcaption>
+            </figure>
+        </fieldset>
+        </div>
+
+</div>
+ </div>
+<div class="margin-top-15">
+<div class=" col-md-4 pull-left ">    					
+                        <button type="button" ng-click="submit();" class="btn btn-success sbold" style="width:200px;">Submit</button>				
+                  </div>
+<div class=" col-md-4 pull-right">    					
+                        <button type="button" ng-click="back();" class="btn btn-success sbold" style="width:200px;">Change members</button>				
+                  </div>
+</div>
+             
+</div>
+  <div class=row ng-show="result&&validation">
+         <h4> Roster has been sent for {{selectedDate.date | date: 'mediumDate'}}<br></h4> 
+           <div ng-repeat="member in members">
+                {{member.userName}} - {{member.title}} <br>
+                {{member.shiftStartTime}} - {{member.shiftEndTime}} <br>
+           </div>  
+        <div class="pull-left ">    					
+                        <button type="button" ng-click="newRoster();" class="btn btn-success sbold" style="width:200px;">Go to Manage Roster</button>				
+                  </div>      
+  </div>
+
+</div>
