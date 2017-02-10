@@ -15,14 +15,14 @@
 			    })
 	 /*$http.post('/api/calldetails/save',calldetail);*/
 	};
-	factory.savekpidetails=function(NodeModel)
+	factory.savekpidetails=function(EntityModel)
 	{	
 		
 		return $http({
 			
 			      method: 'POST', url: '/api/nodedetails/savekpi',
 			
-			      data: NodeModel
+			      data: EntityModel
 			
 			    })
 	 /*$http.post('/api/calldetails/save',calldetail);*/

@@ -1,6 +1,7 @@
 package com.cisco.bccsp.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import com.cisco.bccsp.db.dao.NodeDetailsDAO;
+import com.cisco.bccsp.model.EntityModel;
 import com.cisco.bccsp.model.KPIModel;
 import com.cisco.bccsp.model.Node;
 import com.cisco.bccsp.model.NodeModel;
@@ -29,6 +31,8 @@ public class saveNodeDetails {
 	
 		 private static Logger logger = Logger.getLogger(
 				 saveNodeDetails.class.getName());
+			static Map<String, String> successmap= new HashMap<String, String>();
+
 		 @Context HttpServletRequest servletRequest;  
 		public saveNodeDetails() {
 			
@@ -53,9 +57,12 @@ public class saveNodeDetails {
 		@POST
 		@Path("/savekpi")
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Map<String, String> savekpiDetails( NodeModel node)
+		public Map<String, String> savekpiDetails( EntityModel node)
 		{
-			return NodeDetailsDAO.savekpidetails(node);
+			logger.info(node);
+			//return NodeDetailsDAO.savekpidetails(node);
+			successmap.put("result","success");
+			return successmap; 
 			
 		}
 		@GET

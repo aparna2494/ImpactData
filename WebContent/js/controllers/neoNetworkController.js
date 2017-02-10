@@ -1,8 +1,9 @@
-BCCapp.controller('NeoNetworkController', ['$rootScope', '$scope', 'flowGraph','dataservices','alertDetailsService','$state','$interval','$timeout','neo4jService','KPIDetails','$filter','$stateParams',
-		function($rootScope,$scope, flowGraph,dataservices,alertDetailsService,$state,$interval,$timeout,neo4jService,KPIDetails,$filter,$stateParams) {
+BCCapp.controller('NeoNetworkController', ['$rootScope', '$scope', 'flowGraph','dataservices','dataEntryService','alertDetailsService','$state','$interval','$timeout','neo4jService','KPIDetails','$filter','$stateParams',
+		function($rootScope,$scope, flowGraph,dataservices,dataEntryService,alertDetailsService,$state,$interval,$timeout,neo4jService,KPIDetails,$filter,$stateParams) {
 
 	//$scope.DBnames=["1","2","3"]
-	$scope.count=0;
+	$scope.count=1;
+	var dependency_data=[]
 	$scope.dependencytypes=[{type:"Application"},{type:"Database"},{type:"Others"}]
 	$scope.entitytypes=[{type:"Software"},{type:"Product"},{type:"URL"},{type:"Others"}]
 	$scope.alertCollection = $state.current.data.alertCollection 
@@ -15,7 +16,23 @@ BCCapp.controller('NeoNetworkController', ['$rootScope', '$scope', 'flowGraph','
 		}
 	}]
 	$('#chat_portlet').addClass('hide')
-	
+	 $scope.saveEntityData= function(){
+		
+		for(i=0;i<$scope.count;i++)
+			{
+			console.log(i)
+			console.log($scope.count)
+			dependency_data.push({dependencyName:$scope.dependency[i],dependencyType:$scope.dependencytype[i]})
+			
+			}
+		entity_data={entityName:$scope.entity[0],entityType:$scope.entitytype[0],dependecy_data:dependency_data}
+		var resu= dataEntryService.savekpidetails(entity_data).success(
+                function(data) {
+                	console.log("back here")
+                	console.log(entity_data)
+                });
+     	
+	 }
 $scope.alerts=[];
 	var initdatacaller=0;
 $scope.neovalues;
@@ -41,9 +58,9 @@ var promise
 $scope.refreshfrequencyset=[1,5,10,30,60]
 $scope.alertshow={value:false};
 $scope.historyshow={value:false};
-$scope.updateNodes=function()
+/*$scope.updateNodes=function()
 {
- console.log("inside update nodes")
+ //console.log("inside update nodes")
  angular.forEach($scope.data.nodes, function(value, key) {
 	 $scope.data.nodes[key].data.alert='N';
  
@@ -68,9 +85,9 @@ $scope.updateNodes=function()
 		if(key==$scope.data.nodes.length-1)
 			{
 			
-			 /*$scope.layout = {
+			 $scope.layout = {
 				"name" : "preset"
-			};*/
+			};
   			updateStyle($rootScope.selectedtrackarraylabels_neo)
 			}
 		
@@ -80,10 +97,10 @@ $scope.updateNodes=function()
     
 		
     
-}
-$scope.filterByTrack=function(trackname,selected)
+}*/
+/*$scope.filterByTrack=function(trackname,selected)
 {
-	console.log(selected)
+	//console.log(selected)
 	var temp=$rootScope.selectedtrackarraylabels_neo
 	var index = temp.indexOf(trackname);
 	
@@ -96,13 +113,13 @@ $scope.filterByTrack=function(trackname,selected)
 				temp.splice(index, 1);
 			}
 		$rootScope.selectedtrackarraylabels_neo=temp
-		console.log($rootScope.selectedtrackarraylabels_neo)
+		//console.log($rootScope.selectedtrackarraylabels_neo)
 
 }
 $scope.filterByAlertmode=function(alertmode,selected)
 {
-	console.log(selected);
-	console.log(alertmode);
+	//console.log(selected);
+	//console.log(alertmode);
 	var temp=$scope.selectedalertmodelabels
 	var index = temp.indexOf(alertmode);
 	
@@ -115,13 +132,13 @@ $scope.filterByAlertmode=function(alertmode,selected)
 				temp.splice(index, 1);
 			}
 		$scope.selectedalertmodelabels=temp
-		console.log($scope.selectedalertmodelabels);
+		//console.log($scope.selectedalertmodelabels);
 
-}
+}*/
 updateStyle=function(newval,nodef)
 {
-	console.log(newval)
-	console.log($scope.data.nodes)
+	//console.log(newval)
+	//console.log($scope.data.nodes)
 	var temp_styles = [ 
 	                    {
 			"selector" : "node[masterid !='null']",
@@ -379,7 +396,7 @@ updateStyle=function(newval,nodef)
 				if(initdatacaller==0)
 				{
 					initdatacaller=1
-					console.log("settinglayout")
+					//console.log("settinglayout")
 				$scope.layout = {
 						"name" : "preset"
 					};
@@ -393,7 +410,7 @@ updateStyle=function(newval,nodef)
 
 }
 $scope.$watch('selectedtrackarraylabels_neo',function(newval){
-	console.log("track changed")
+	//console.log("track changed")
 	$scope.alerttracks=newval;
 	updateNodes(newval);
 	updateAlerts(newval)
@@ -401,19 +418,19 @@ $scope.$watch('selectedtrackarraylabels_neo',function(newval){
 },true)
 
 $scope.$watch('selectedalertmodelabels',function(newval){
-	console.log("alert mode changed")
+	//console.log("alert mode changed")
 	$scope.alertmode=newval;
-	console.log($scope.alertmode);
-	console.log(newval);
+	//console.log($scope.alertmode);
+	//console.log(newval);
 	//updateNodes(newval);
     updateAlertmode(newval);
 },true)
 
 updateAlertmode=function(newval,selected)
 {
-console.log(selected)
-console.log(newval)
-console.log($scope.alerts.length)
+//console.log(selected)
+//console.log(newval)
+//console.log($scope.alerts.length)
 	if(newval.length!=0)
 		{
 		$scope.alerts_filtered=[]
@@ -428,7 +445,7 @@ console.log($scope.alerts.length)
 			if(key==$scope.alerts.length-1 && selected!=undefined)
 				{
 				$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-				console.log($scope.alerts_filtered)
+				//console.log($scope.alerts_filtered)
 				}
 			
 			
@@ -445,7 +462,7 @@ console.log($scope.alerts.length)
 				if(key==$scope.alerts.length-1 && selected!=undefined)
 					{
 					$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-					console.log($scope.alerts_filtered)
+					//console.log($scope.alerts_filtered)
 					}
 				
 				
@@ -468,7 +485,7 @@ console.log($scope.alerts.length)
 			if(key==$scope.alerts.length-1 && selected!=undefined)
 				{
 				$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-				console.log($scope.alerts_filtered)
+				//console.log($scope.alerts_filtered)
 				}
 			
 			
@@ -478,7 +495,7 @@ console.log($scope.alerts.length)
 		if(selected!=undefined)
 		{
 			$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-			console.log($scope.alerts_filtered)
+			//console.log($scope.alerts_filtered)
 			}
 		}
 	 
@@ -487,28 +504,28 @@ console.log($scope.alerts.length)
 updateNodes=function(newval,selected)
 {
 	
-	console.log(selected)
+	//console.log(selected)
 	
-	console.log(newval)
-	console.log($scope.data)
-	//console.log("inside Update nodes" +$scope.data.nodes[0].data.track_name);
-	//console.log($scope.alerts.length)
+	//console.log(newval)
+	//console.log($scope.data)
+	////console.log("inside Update nodes" +$scope.data.nodes[0].data.track_name);
+	////console.log($scope.alerts.length)
 		if(newval.length!=0)
 			{
 			$scope.data.selectedNodes=[];
 			
 			$.each($scope.data.nodes,function(key,value){
-				//console.log(value.data.track_name);
+				////console.log(value.data.track_name);
 				if(newval.indexOf(value.data.track_name)>-1)
 					{
 					$scope.data.selectedNodes.push(value)
-					console.log($scope.data.selectedNodes);
+					//console.log($scope.data.selectedNodes);
 					}
 				
 				if(key==$scope.data.nodes-1 && selected!=undefined)
 					{
 					$scope.data.selectedNodes=$filter('filter')($scope.data.selectedNodes,selected)
-					console.log($scope.data.selectedNodes)
+					//console.log($scope.data.selectedNodes)
 					}
 				
 				
@@ -521,7 +538,7 @@ updateNodes=function(newval,selected)
 			if(selected!=undefined)
 			{
 				$scope.data.selectedNodes=$filter('filter')($scope.data.selectedNodes,selected)
-				//console.log($scope.alerts_filtered)
+				////console.log($scope.alerts_filtered)
 				}
 			}
 
@@ -529,15 +546,15 @@ updateNodes=function(newval,selected)
 
 updateAlerts=function(newval,selected)
 {
-console.log(selected)
-console.log(newval)
-console.log($scope.alerts.length)
+//console.log(selected)
+//console.log(newval)
+//console.log($scope.alerts.length)
 	if(newval.length!=0)
 		{
 			$scope.alerts_filtered=[]
 			if($scope.alertmode.length>0)
 		{
-				console.log("alertmode not empty");
+				//console.log("alertmode not empty");
 		$.each($scope.alerts,function(key,value){
 			if((newval.indexOf(value.track_name)>-1)&&($scope.alertmode.indexOf(value.alert_mode)>-1))
 				{
@@ -547,7 +564,7 @@ console.log($scope.alerts.length)
 			if(key==$scope.alerts.length-1 && selected!=undefined)
 				{
 				$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-				console.log($scope.alerts_filtered)
+				//console.log($scope.alerts_filtered)
 				}
 			
 			
@@ -555,7 +572,7 @@ console.log($scope.alerts.length)
 		}
 		else
 			{
-			console.log("alertmode is empty");
+			//console.log("alertmode is empty");
 			$.each($scope.alerts,function(key,value){
 				if(newval.indexOf(value.track_name)>-1)
 					{
@@ -565,7 +582,7 @@ console.log($scope.alerts.length)
 				if(key==$scope.alerts.length-1 && selected!=undefined)
 					{
 					$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-					console.log($scope.alerts_filtered)
+					//console.log($scope.alerts_filtered)
 					}
 				
 				
@@ -587,7 +604,7 @@ console.log($scope.alerts.length)
 			if(key==$scope.alerts.length-1 && selected!=undefined)
 				{
 				$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-				console.log($scope.alerts_filtered)
+				//console.log($scope.alerts_filtered)
 				}
 			
 			
@@ -597,7 +614,7 @@ console.log($scope.alerts.length)
 		if(selected!=undefined)
 		{
 			$scope.alerts_filtered=$filter('filter')($scope.alerts_filtered,selected)
-			console.log($scope.alerts_filtered)
+			//console.log($scope.alerts_filtered)
 			}
 		}
 	 
@@ -605,11 +622,11 @@ console.log($scope.alerts.length)
 
 $scope.showdetails=function(nodeID)
 {
-	console.log("insidefunction");
-	console.log(nodeID)
+	//console.log("insidefunction");
+	//console.log(nodeID)
 	
 	var flag=1;
-	//console.log($scope.data.nodes);
+	////console.log($scope.data.nodes);
 	$.each($scope.data.nodes,function(key,value){
 		if(flag)
 	  {
@@ -617,24 +634,24 @@ $scope.showdetails=function(nodeID)
 			{
 			$timeout(function(){$scope.selected_node=value.data.component_name});
 			$scope.selected_component_code=value.data.component_code;
-			console.log($scope.selected_component_code);
-			console.log($scope.selected_node);
+			//console.log($scope.selected_component_code);
+			//console.log($scope.selected_node);
 			flag=0;
 			//break;
 			}
 	  }
 	});
-	console.log($scope.selected_component_code)
+	//console.log($scope.selected_component_code)
 	neo4jService.getNeoData($scope.selected_component_code).success( function(data)
 			{
-		       console.log(data);
+		       //console.log(data);
 		       $timeout(function(){$scope.jobdetails=data;});
 		       
 			});
 }
 $scope.selectedValue = function (selected) {
-	console.log("in selected value fun")
-	console.log($scope.data.selectedNodes)
+	//console.log("in selected value fun")
+	//console.log($scope.data.selectedNodes)
 	  if(selected!=undefined)
 		  {
 		  $scope.searchTerm= selected.title;
@@ -824,8 +841,8 @@ initdata();
 								 //$state.go($state.current, {}, {reload: true});
 								dataservices.alertsdataaction($scope.alertCollection).success(
 			                             function(data) {
-			                            	 console.log("data");
-			                            	 console.log(data);
+			                            	 //console.log("data");
+			                            	 //console.log(data);
 			                            	 $scope.AlertComponentArray=[];
 			                            	 $scope.AlertParentComponentArray=[];
 			                            	 if(data.length==0)
@@ -844,7 +861,7 @@ initdata();
 			           			                            	value.spark_room_id= res[0].spark_room_id;
 			           			                             });
 			                 	          				}*/
-			                 	          		console.log(value);
+			                 	          		//console.log(value);
 			                 	          		$scope.alerts.push(value);	
 			                 	          		
 			                 	          		$scope.AlertComponentArray.push(value.id);
@@ -858,14 +875,14 @@ initdata();
 			                 	          		$scope.alertshow={value:true};
 			                 	          		if(key==data.length-1)
 		                 	          			{
-		                 	          			console.log("calling update nodes from reload inif")
+		                 	          			//console.log("calling update nodes from reload inif")
 		                 	          			updateAlerts($rootScope.selectedtrackarraylabels_neo)
 				                             	$scope.updateNodes();
 		                 	          			}
 			                 	          		}
 			                 	          		else
 			                 	          			{
-			                 	          			console.log("calling update nodes from reload inelse")
+			                 	          			//console.log("calling update nodes from reload inelse")
 			                 	          			updateAlerts($rootScope.selectedtrackarraylabels_neo)
 					                             	$scope.updateNodes();
 			                 	          			}
@@ -887,14 +904,14 @@ initdata();
 				 $scope.reloadData()
 			 }
 			 
-			 $scope.setRefreshFrequency=function(frequency)
+			/* $scope.setRefreshFrequency=function(frequency)
 			 {
 				 $rootScope.refreshFrequency=frequency*60*1000
 				 $interval.cancel(promise)
 				 //$rootScope.countvar_neo=0;
 				 $scope.reloadData()
 				 
-			 }
+			 }*/
 			 function initdata(){
 			$scope.searchTerm = "";
 			
@@ -902,15 +919,15 @@ initdata();
                           function(data) {
                                 
                                 $scope.jobdetails=data
-                                console.log(data);
+                                //console.log(data);
                                
                                });
-			 console.log($scope.jobdetails); */
+			 //console.log($scope.jobdetails); */
 			var resu = dataservices.flowdiagram($scope.flowCollection).success(
                     function(data) {
                     	
-                    	console.log("node data");              
-                    	console.log(data);     	
+                    	//console.log("node data");              
+                    	//console.log(data);     	
                     	$scope.data={"edges":[],"nodes":[],"selectedNodes":[]}
                     	
                     	angular.forEach(data[0].edges, function(value, key) {
@@ -963,8 +980,8 @@ initdata();
                     	
                     	});
                     	
-                    	console.log("nodes data from value");
-                    	console.log($scope.data.nodes);
+                    	//console.log("nodes data from value");
+                    	//console.log($scope.data.nodes);
                     	var resu = dataservices.alertsdataaction($scope.alertCollection).success(
                                 function(data) {
                                 	 $scope.alerts_filtered=[];
@@ -988,10 +1005,10 @@ initdata();
                     	          			
                     	          		$scope.alerts.push(value);
                     	          		$scope.searchStr = "Invalid";
-                    	          		console.log($scope.searchStr);
+                    	          		//console.log($scope.searchStr);
                     	          		$scope.$watch('searchStr',function(newval){
-                    	          			console.log("inside watch")
-                    	          			console.log(newval);
+                    	          			//console.log("inside watch")
+                    	          			//console.log(newval);
                     	          		})
                     	          		$scope.AlertComponentArray.push(value.id);
                     	          		if(value.masterid!=null)
@@ -1003,26 +1020,26 @@ initdata();
                     	          		$scope.historyshow={value:true};
                     	          		$scope.alertshow={value:true};
                     	          		if(key==data.length-1){
-                	          				console.log("calling update nodes onload inif")
+                	          				//console.log("calling update nodes onload inif")
                 	          				updateAlerts($rootScope.selectedtrackarraylabels_neo)
 			                             	$scope.updateNodes();
                 	          			}
                     	          		}
                     	          		else
                     	          			{
-                    	          			console.log("calling update nodes onload inelse")
+                    	          			//console.log("calling update nodes onload inelse")
                     	          			updateAlerts($rootScope.selectedtrackarraylabels_neo)
 			                             	$scope.updateNodes();
                     	          			}
-                    	          		//console.log("alertarray");
-                    	          		//console.log($scope.AlertComponentArray);
+                    	          		////console.log("alertarray");
+                    	          		////console.log($scope.AlertComponentArray);
                     	          		
                                 	});
                                 	
                                 
                     	
                     	});
-                    	
+                    /*	
                     	 $scope.refresh=function()
                         	{
                     		 
@@ -1044,7 +1061,7 @@ initdata();
                     		 $scope.hiddenBox="";
                     		 
                     		
-                       	}
+                       	}*/
                          
                         /* $scope.assigntome = function(assignedto,alertID){
                          	if(assignedto=="" && $scope.historyshow.value==true){
@@ -1063,7 +1080,7 @@ initdata();
                          }*/
                     	 
                     	 $scope.assigntome = function(assignedto,alertID){
-                    		 console.log("inside assigntome");
+                    		 //console.log("inside assigntome");
                     		 $scope.required_alertid=alertID;
                     		 
                     		 angular.forEach($scope.alerts_filtered, function(value, key) {
@@ -1071,7 +1088,7 @@ initdata();
                 	          			
                 	          			$scope.assigned_by=$scope.alerts_filtered[key].assigned_by;
                 	          			$scope.assigned_to=$scope.alerts_filtered[key].alert_assignee;
-                	          			console.log($scope.assigned_by);
+                	          			//console.log($scope.assigned_by);
                 	          		}
                           	
                           		
@@ -1080,9 +1097,9 @@ initdata();
                     		 $("#insertid").hide();
                          	$("#invalidalert").hide();
                          	//alert($scope.alert.alert_assignee.length);
-                         	console.log("Value");
-                         	console.log($scope.assigned_by);
-                         	console.log(assignedto);
+                         	//console.log("Value");
+                         	//console.log($scope.assigned_by);
+                         	//console.log(assignedto);
                          	
                          	if ($scope.assigned_by==undefined||$scope.assigned_by=="")
                          		{
@@ -1099,7 +1116,7 @@ initdata();
                          			//alert("inside if");
                          			$("#unassignbtn").hide();
                          			
-                         			//console.log($rootScope.user);
+                         			////console.log($rootScope.user);
                          		}
                          	
                          	else 
@@ -1117,8 +1134,8 @@ initdata();
                          }
                          
                          $scope.clickedyes = function(alertID,flag){
-                        	 console.log("clicked yes")
-                        	 console.log(alertID);
+                        	 //console.log("clicked yes")
+                        	 //console.log(alertID);
                          	if(flag=="0")
                          		{
                          		 $scope.newassignee="loggeduser";
@@ -1468,7 +1485,7 @@ initdata();
 				//alert(element);
 				$("#homeclickneo").click();
 				$("#menuclickneo").mouseout();
-            	console.log(element);
+            	//console.log(element);
             	var componentID = element;
             	$scope.history=[]
          		var resu = alertDetailsService.alerthistoryaction(componentID).success(
@@ -1529,30 +1546,30 @@ initdata();
 	         		   var comp_code=$scope.selected_component_code.toString();
 	         	 neo4jService.getNeoData(comp_code).success( function(data)
 	         			{
-	         		       console.log(data);
+	         		       //console.log(data);
 	         		       $timeout(function(){$scope.jobdetails=data;});
 	         		       
 	         			});
-        	  /*console.log(element.data())
+        	  /*//console.log(element.data())
         	  $timeout(function(){
         		  $scope.selectedNodeCode= element.data().component_name;
         		  $scope.kpi_details_for_node=element.data().kpi_data
         	  })*/
         	  $scope.kpi_details_for_node=[]
-        	  console.log(element.data())
+        	  //console.log(element.data())
         	 KPIDetails.getKPIdetails({track_name: element.data().track_name,collection: $scope.flowCollection,"node_id":element.data().id}).then(function(res){
-        		 console.log(res.data[0].kpi_data)
+        		 //console.log(res.data[0].kpi_data)
         		 $scope.kpi_details_for_node=res.data[0].kpi_data
         			//$scope.components=res.data;
         			
         			
         		},function(){
-        			console.log("getting request failed");
+        			//console.log("getting request failed");
         		});
-        	  console.log($scope.kpi_details_for_node)
+        	  //console.log($scope.kpi_details_for_node)
         	 /* neo4jService.getjobdata(element.data().component_name).success(
                          function(data) {
-                        	 console.log(data[0])
+                        	 //console.log(data[0])
                         	 $scope.jobdetails=data[0];
                         	 
                         	 $scope.jobdetails.concurrent_program = $scope.jobdetails.concurrent_program.filter( onlyUnique );
@@ -1579,7 +1596,7 @@ initdata();
             $scope.contextMenu = [{
                 content: 'Show Alert History',
                 select: function(element) {
-                	//console.log(element.id())
+                	////console.log(element.id())
                 	var componentID = element.id()
                 	$scope.history=[]
              		var resu = alertDetailsService.alerthistoryaction(componentID).success(
@@ -1634,26 +1651,26 @@ initdata();
                   content: 'KPI Details',
                   select: function(element) {
                 	  $scope.selectedNodeCode= element.data().component_name;
-                	  /*console.log(element.data())
+                	  /*//console.log(element.data())
                 	  $timeout(function(){
                 		  $scope.selectedNodeCode= element.data().component_name;
                 		  $scope.kpi_details_for_node=element.data().kpi_data
                 	  })*/
                 	  $scope.kpi_details_for_node=[]
-                	  console.log(element.data())
+                	  //console.log(element.data())
                 	 KPIDetails.getKPIdetails({track_name: element.data().track_name,collection: $scope.flowCollection,"node_id":element.data().id}).then(function(res){
-                		 console.log(res.data[0].kpi_data)
+                		 //console.log(res.data[0].kpi_data)
                 		 $scope.kpi_details_for_node=res.data[0].kpi_data
                 			//$scope.components=res.data;
                 			
                 			
                 		},function(){
-                			console.log("getting request failed");
+                			//console.log("getting request failed");
                 		});
-                	  console.log($scope.kpi_details_for_node)
+                	  //console.log($scope.kpi_details_for_node)
                 	  /*neo4jService.getjobdata(element.data().component_name).success(
 	                             function(data) {
-	                            	 console.log(data[0])
+	                            	 //console.log(data[0])
 	                            	 $scope.jobdetails=data[0];
 	                            	 
 	                            	 $scope.jobdetails.concurrent_program = $scope.jobdetails.concurrent_program.filter( onlyUnique );
